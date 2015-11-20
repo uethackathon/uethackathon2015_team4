@@ -34,5 +34,7 @@ class Subject extends BaseSubject {
         $subject_group = Subject::model()->findByAttributes(array('subject_id' => $subject_id));
         return $subject_group->subject_group_id;
     }
+    
+   //
 
 }
