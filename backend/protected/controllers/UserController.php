@@ -36,6 +36,13 @@ class UserController extends Controller {
         }
     }
 
+    public function actionUpdateProfile() {
+        $attr = StringHelper::filterArrayString($_POST);
+        $obj_file = $_FILES['avatar'];
+        $message = User::model()->updateProfile($attr, $obj_file);
+        ResponseHelper::JsonReturnSuccess('', $message);
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
