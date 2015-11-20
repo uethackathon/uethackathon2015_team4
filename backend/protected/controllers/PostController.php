@@ -21,7 +21,9 @@ class PostController extends Controller {
             $lat = StringHelper::filterString($request->getQuery('lat'));
             $lng = StringHelper::filterString($request->getQuery('lng'));
             $user_id = StringHelper::filterString($request->getQuery('user_id'));
-            $data = Post::model()->getPostNearBy($lat, $lng, $user_id);
+            $limit = StringHelper::filterString($request->getQuery('limit'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Post::model()->getPostNearBy($lat, $lng, $user_id, $limit, $offset);
             ResponseHelper::JsonReturnSuccess($data, 'success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
@@ -32,7 +34,9 @@ class PostController extends Controller {
         $request = Yii::app()->request;
         try {
             $user_id = StringHelper::filterString($request->getQuery('user_id'));
-            $data = Post::model()->getPostBySubjectUser($user_id);
+            $limit = StringHelper::filterString($request->getQuery('limit'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Post::model()->getPostBySubjectUser($user_id, $limit, $offset);
             ResponseHelper::JsonReturnSuccess($data, 'success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
@@ -59,7 +63,52 @@ class PostController extends Controller {
         }
     }
 
-   
+    public function actionGetPostByUser() {
+        $request = Yii::app()->request;
+        try {
+            $post_id = StringHelper::filterString($request->getQuery('user_id'));
+            $limit = StringHelper::filterString($request->getQuery('limit'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Post::model()->getPostByUser($post_id, $limit, $offset);
+            ResponseHelper::JsonReturnSuccess($data, 'success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionUpdatePost() {
+        
+    }
+
+    public function actionLike() {
+        $request = Yii::app()->request;
+        try {
+            $post_id = StringHelper::filterString($request->getPost('post_id'));
+            $user_id = StringHelper::filterString($request->getPost('user_id'));
+            if (PostLike::model()->like($post_id, $user_id)) {
+                ResponseHelper::JsonReturnSuccess('', 'success');
+            } else {
+                ResponseHelper::JsonReturnError('', 'server error');
+            }
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionComment() {
+        $request = Yii::app()->request;
+        try {
+            $post_id = StringHelper::filterString($request->getPost('post_id'));
+            $user_id = StringHelper::filterString($request->getPost('user_id'));
+            if (PostLike::model()->like($post_id, $user_id)) {
+                ResponseHelper::JsonReturnSuccess('', 'success');
+            } else {
+                ResponseHelper::JsonReturnError('', 'server error');
+            }
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
 
     // Uncomment the following methods and override them if needed
     /*

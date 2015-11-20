@@ -7,19 +7,16 @@
  * property or method in class "Post".
  *
  * Columns in table "post" available as properties of the model,
- * followed by relations of table "post" available as properties of the model.
+ * and there are no model relations.
  *
  * @property integer $post_id
  * @property integer $user_id
  * @property integer $location_id
  * @property string $content
  * @property integer $date
+ * @property integer $post_like_count
+ * @property integer $post_comment_count
  *
- * @property Comment[] $comments
- * @property User $user
- * @property Location $location
- * @property User[] $users
- * @property Subject[] $subjects
  */
 abstract class BasePost extends GxActiveRecord {
 
@@ -41,41 +38,32 @@ abstract class BasePost extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('post_id, user_id, location_id, content, date', 'required'),
-			array('post_id, user_id, location_id, date', 'numerical', 'integerOnly'=>true),
-			array('post_id, user_id, location_id, content, date', 'safe', 'on'=>'search'),
+			array('user_id, content, date', 'required'),
+			array('user_id, location_id, date, post_like_count, post_comment_count', 'numerical', 'integerOnly'=>true),
+			array('location_id, post_like_count, post_comment_count', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('post_id, user_id, location_id, content, date, post_like_count, post_comment_count', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations() {
 		return array(
-			'comments' => array(self::HAS_MANY, 'Comment', 'post_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-			'location' => array(self::BELONGS_TO, 'Location', 'location_id'),
-			'users' => array(self::MANY_MANY, 'User', 'post_like(post_id, user_id)'),
-			'subjects' => array(self::MANY_MANY, 'Subject', 'post_subject(post_id, subject_id)'),
 		);
 	}
 
 	public function pivotModels() {
 		return array(
-			'users' => 'PostLike',
-			'subjects' => 'PostSubject',
 		);
 	}
 
 	public function attributeLabels() {
 		return array(
 			'post_id' => Yii::t('app', 'Post'),
-			'user_id' => null,
-			'location_id' => null,
+			'user_id' => Yii::t('app', 'User'),
+			'location_id' => Yii::t('app', 'Location'),
 			'content' => Yii::t('app', 'Content'),
 			'date' => Yii::t('app', 'Date'),
-			'comments' => null,
-			'user' => null,
-			'location' => null,
-			'users' => null,
-			'subjects' => null,
+			'post_like_count' => Yii::t('app', 'Post Like Count'),
+			'post_comment_count' => Yii::t('app', 'Post Comment Count'),
 		);
 	}
 
@@ -87,6 +75,8 @@ abstract class BasePost extends GxActiveRecord {
 		$criteria->compare('location_id', $this->location_id);
 		$criteria->compare('content', $this->content, true);
 		$criteria->compare('date', $this->date);
+		$criteria->compare('post_like_count', $this->post_like_count);
+		$criteria->compare('post_comment_count', $this->post_comment_count);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
