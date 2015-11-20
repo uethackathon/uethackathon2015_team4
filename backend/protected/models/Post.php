@@ -8,11 +8,14 @@ class Post extends BasePost {
         return parent::model($className);
     }
 
-    public function add($attr) {
+    public function add($attr, $image) {
         $model = new Post;
         $model->setAttributes($attr);
         $model->date = time();
-
+        $model->post_comment_count = 0;
+        $model->post_like_count = 0;
+        $image_url = UploadHelper::getUrlUploadSingleImage($image, $attr['user_id']);
+        $model->image = $image_url;
         if ($model->save(FALSE)) {
             $subject_arr = json_decode($attr['subject'], true);
             foreach ($subject_arr as $item) {

@@ -16,6 +16,7 @@
  * @property integer $date
  * @property integer $post_like_count
  * @property integer $post_comment_count
+ * @property string $image
  *
  */
 abstract class BasePost extends GxActiveRecord {
@@ -40,8 +41,9 @@ abstract class BasePost extends GxActiveRecord {
 		return array(
 			array('user_id, content, date', 'required'),
 			array('user_id, location_id, date, post_like_count, post_comment_count', 'numerical', 'integerOnly'=>true),
-			array('location_id, post_like_count, post_comment_count', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('post_id, user_id, location_id, content, date, post_like_count, post_comment_count', 'safe', 'on'=>'search'),
+			array('image', 'length', 'max'=>255),
+			array('location_id, post_like_count, post_comment_count, image', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('post_id, user_id, location_id, content, date, post_like_count, post_comment_count, image', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +66,7 @@ abstract class BasePost extends GxActiveRecord {
 			'date' => Yii::t('app', 'Date'),
 			'post_like_count' => Yii::t('app', 'Post Like Count'),
 			'post_comment_count' => Yii::t('app', 'Post Comment Count'),
+			'image' => Yii::t('app', 'Image'),
 		);
 	}
 
@@ -77,6 +80,7 @@ abstract class BasePost extends GxActiveRecord {
 		$criteria->compare('date', $this->date);
 		$criteria->compare('post_like_count', $this->post_like_count);
 		$criteria->compare('post_comment_count', $this->post_comment_count);
+		$criteria->compare('image', $this->image, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
