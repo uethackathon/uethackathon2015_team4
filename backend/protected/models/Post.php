@@ -12,7 +12,8 @@ class Post extends BasePost {
         $model = new Post;
         $model->setAttributes($attr);
         $model->date = time();
-
+        $model->post_comment_count = 0;
+        $model->post_like_count = 0;
         if ($model->save(FALSE)) {
             $subject_arr = json_decode($attr['subject'], true);
             foreach ($subject_arr as $item) {

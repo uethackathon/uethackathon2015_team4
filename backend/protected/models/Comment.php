@@ -16,7 +16,7 @@ class Comment extends BaseComment {
         $model->content = $content;
         $model->date = time();
         if ($model->save(FALSE)) {
-            $post->post_comment_count += 1;
+            $post->post_comment_count = intval($post->post_comment_count) + 1;
             $post->save(FALSE);
             return TRUE;
         }
