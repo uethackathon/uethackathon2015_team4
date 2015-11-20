@@ -12,7 +12,15 @@ class Post extends BasePost {
         $model = new Post;
         $model->setAttributes($attr);
         $model->date = time();
+
         if ($model->save(FALSE)) {
+            $subject_arr = json_decode($attr['subject'], true);
+            foreach ($subject_arr as $item) {
+                $subject_post = new PostSubject;
+                $subject_post->post_id = $model->post_id;
+                $subject_post->subject_id = $item;
+                $subject_post->save(FALSE);
+            }
             return TRUE;
         }
         return FALSE;
