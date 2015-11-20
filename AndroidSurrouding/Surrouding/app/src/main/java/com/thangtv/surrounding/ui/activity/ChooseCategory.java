@@ -1,26 +1,40 @@
 package com.thangtv.surrounding.ui.activity;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.thangtv.surrounding.R;
-import com.thangtv.surrounding.adapter.CategoryExpandableAdapter;
+import com.thangtv.surrounding.adapter.ViewPagerAdapter;
+import com.thangtv.surrounding.adapter.ViewPagerAdapterIconOnly;
 import com.thangtv.surrounding.model.CategoryChild;
 import com.thangtv.surrounding.model.CategoryParent;
+import com.thangtv.surrounding.ui.fragment.CategoriesListFragment;
+import com.thangtv.surrounding.ui.fragment.FeedFragment;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ChooseCategory extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private Toolbar toolbar;
-    private List<ParentObject> categoryParents;
+
+    private android.support.v7.widget.Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    public List<CategoryParent> categoryParentList;
+    public List<CategoryChild> result;
+    public static android.support.v4.app.FragmentManager fragmentManager;
+    private List<CategoriesListFragment> fragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,28 +44,59 @@ public class ChooseCategory extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //set up fake data
-        categoryParents = new ArrayList<>();
+
+        //feed data
+        categoryParentList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             CategoryParent categoryParent = new CategoryParent();
-            List<Object> categoryChilds = new ArrayList<>();
+            categoryParent.setTitle("Parent");
             for (int j = 0; j < 5; j++) {
-                CategoryChild categoryChild;
-                categoryChild = new CategoryChild("child");
-                categoryChilds.add(categoryChild);
+                categoryParent.getCategoryChildList().add(new CategoryChild("child"));
             }
-            categoryParent.setChildObjectList(categoryChilds);
-            categoryParent.setTitle("Fucking Idiot");
-            categoryParents.add(categoryParent);
+            categoryParentList.add(categoryParent);
         }
 
-        //set up recycler view
-        recyclerView = (RecyclerView) findViewById(R.id.category_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //set up viewpager
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        CategoryExpandableAdapter adapter = new CategoryExpandableAdapter(this, categoryParents);
-        adapter.setCustomParentAnimationViewId(R.id.parent_expand_arrow);
-        adapter.setParentAndIconExpandOnClick(true);
-        recyclerView.setAdapter(adapter);
+        fragments = new ArrayList<>();
+        for (int i = 0; i < categoryParentList.size(); i++) {
+            CategoriesListFragment fragment = CategoriesListFragment.newInstance(i);
+            fragments.add(fragment);
+            adapter.addFragment(fragment, "ABC");
+        }
+
+        viewPager.setAdapter(adapter);
+
+        //set up tab layout
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+
     }
+
+    private void setupViewPager(ViewPager viewPager) {
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_choose_category, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.done:
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
 }
