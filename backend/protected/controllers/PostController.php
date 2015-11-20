@@ -15,6 +15,38 @@ class PostController extends Controller {
         }
     }
 
+    public function actionGetPostNearBy() {
+        $request = Yii::app()->request;
+        try {
+            $lat = StringHelper::filterString($request->getQuery('lat'));
+            $lng = StringHelper::filterString($request->getQuery('lng'));
+            $user_id = StringHelper::filterString($request->getQuery('user_id'));
+            $data = Post::model()->getPostNearBy($lat, $lng, $user_id);
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionGetPostByUserSubject() {
+        $request = Yii::app()->request;
+        try {
+            $user_id = StringHelper::filterString($request->getQuery('user_id'));
+            $data = Post::model()->getPostBySubjectUser($user_id);
+            ResponseHelper::JsonReturnSuccess($data, 'success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionUploadImage() {
+        $user_id = Yii::app()->request->getPost('user_id');
+        if (empty($user_id)) {
+            $user_id = 1;
+        }
+        $url = UploadHelper::getUrlUploadSingleImage($_FILES['image'], $user_id);
+        ResponseHelper::JsonReturnSuccess($url, 'Success');
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

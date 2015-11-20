@@ -22,20 +22,22 @@ class User extends BaseUser {
             return 'SERVER_ERROR';
         }
     }
-    
-    public function login($attr)
-    {
-         $check = User::model()->findByAttributes(array('email' => $attr['email']));
-         if($check)
-         {
-             if($check->password == md5($attr['password']))
-             {
-                 return $check;
-             } else {
-                 return FALSE;
-             }
-         }
-         return FALSE;
+
+    public function login($attr) {
+        $check = User::model()->findByAttributes(array('email' => $attr['email']));
+        if ($check) {
+            if ($check->password == md5($attr['password'])) {
+                return $check;
+            } else {
+                return FALSE;
+            }
+        }
+        return FALSE;
+    }
+
+    public function getUserById($id) {
+        $data = User::model()->findByPk($id);
+        return $data->first_name . " " . $data->last - name;
     }
 
 }
