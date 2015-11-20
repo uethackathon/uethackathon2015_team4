@@ -5,11 +5,14 @@ class PostController extends Controller {
     public function actionIndex() {
         $this->render('index');
     }
-    
-    public function actionAdd()
-    {
+
+    public function actionAdd() {
         $attr = StringHelper::filterArrayString($_POST);
-       
+        if (Post::model()->add($attr)) {
+            ResponseHelper::JsonReturnSuccess('', 'success');
+        } else {
+            ResponseHelper::JsonReturnError('', 'server error');
+        }
     }
 
     // Uncomment the following methods and override them if needed
