@@ -34,7 +34,6 @@ public class CategoryExpandableAdapter extends ExpandableRecyclerAdapter<Categor
         super(context, parentItemList);
         inflater = LayoutInflater.from(context);
         Log.d("TEST_LIST", parentItemList.size() + " ");
-        checkList = new boolean[parentItemList.size()];
     }
 
     @Override
