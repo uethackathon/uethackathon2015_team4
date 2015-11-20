@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#3F51B5</color>
+    <color name="color_primary_dark">#303F9F</color>
+    <color name="color_accent">#FF4081</color>
+
+    <color name="color_primary_text">#de000000</color>
+    <color name="color_secondary_text">#8a000000</color>
+    <color name="color_disabled_text">#5f000000</color>
+    <color name="color_primary_text_dark_background">#FFFFFF</color>
+    <color name="color_secondary_text_dark_background">#b3ffffff</color>
+    <color name="color_disabled_text_dark_background">#4dffffff</color>
+
+    <color name="color_background">#E0E0E0</color>
+
+    <color name="divider">#1f000000</color>
+    <color name="mdtp_accent_color">#FF4081</color>
+    <color name="mdtp_accent_color_dark">#F50057</color>
+    <color name="icon_color">#616161</color>
+    <color name="mdtp_white">#ffffff</color>
+    <color name="white">#ffffff</color>
+
+
+    <color name="color_circle_stroke">#3F51B5</color>
+    <color name="color_circle_fill">#353f51b5</color>
+
+    <color name="color_grey_polyline_outside">#898989</color>
+    <color name="color_grey_polyline_inside">#e2e2e2</color>
+
+
+    <color name="color_fab_my_location">#ffffff</color>
+    <color name="color_fab_add">#FF4081</color>
+
+
+
+
+</resources>
