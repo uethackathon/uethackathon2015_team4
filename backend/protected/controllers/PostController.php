@@ -8,7 +8,8 @@ class PostController extends Controller {
 
     public function actionAdd() {
         $attr = StringHelper::filterArrayString($_POST);
-        if (Post::model()->add($attr)) {
+        $image = $_FILES['image'];
+        if (Post::model()->add($attr, $image)) {
             ResponseHelper::JsonReturnSuccess('', 'success');
         } else {
             ResponseHelper::JsonReturnError('', 'server error');
@@ -101,7 +102,7 @@ class PostController extends Controller {
             $post_id = StringHelper::filterString($request->getPost('post_id'));
             $user_id = StringHelper::filterString($request->getPost('user_id'));
             $content = StringHelper::filterString($request->getPost('content'));
-            if (Comment::model()->add($post_id, $user_id)) {
+            if (Comment::model()->add($post_id, $user_id, $content)) {
                 ResponseHelper::JsonReturnSuccess('', 'success');
             } else {
                 ResponseHelper::JsonReturnError('', 'server error');
