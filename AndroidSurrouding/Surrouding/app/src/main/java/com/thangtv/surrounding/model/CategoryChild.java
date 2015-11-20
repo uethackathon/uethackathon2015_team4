@@ -19,6 +19,11 @@ public class CategoryChild {
 
     }
 
+    public CategoryChild(String title, int id) {
+        this.title = title;
+        this.id = id;
+    }
+
     public CategoryChild(String title) {
         this.title = title;
     }

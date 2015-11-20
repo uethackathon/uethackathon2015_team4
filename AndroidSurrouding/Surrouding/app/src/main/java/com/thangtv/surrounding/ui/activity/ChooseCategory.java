@@ -18,11 +18,19 @@ import com.thangtv.surrounding.adapter.ViewPagerAdapter;
 import com.thangtv.surrounding.adapter.ViewPagerAdapterIconOnly;
 import com.thangtv.surrounding.model.CategoryChild;
 import com.thangtv.surrounding.model.CategoryParent;
+import com.thangtv.surrounding.network.model.GetAllSubject;
+import com.thangtv.surrounding.network.service.IGetAllSubject;
 import com.thangtv.surrounding.ui.fragment.CategoriesListFragment;
 import com.thangtv.surrounding.ui.fragment.FeedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class ChooseCategory extends AppCompatActivity {
 
@@ -44,9 +52,64 @@ public class ChooseCategory extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        categoryParentList = new ArrayList<>(); //declare
+
+        // Import retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://project.huynguyenis.me")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IGetAllSubject service = retrofit.create(IGetAllSubject.class);
+
+        final Call<GetAllSubject> call = service.getAllSubject();
+
+        call.enqueue(new Callback<GetAllSubject>() {
+            @Override
+            public void onResponse(Response<GetAllSubject> response, Retrofit retrofit) {
+                System.out.println("status code: " + response.code());
+                if (!response.isSuccess()) {
+                    try {
+                        System.out.println(response.errorBody().string());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                GetAllSubject listSubject = response.body();
+                if (listSubject == null) return;
+
+                for (int pos = 0; pos < listSubject.getData().size(); pos++) {
+                    int ID_SubjectGroup = Integer.parseInt(listSubject.getData().get(pos).getSubjectId());
+                    if (!isHaveParentList(ID_SubjectGroup)) {
+                        categoryParentList.add(new CategoryParent(ID_SubjectGroup));
+                    }
+                }
+                for (int pos = 0; pos < listSubject.getData().size(); pos++) {
+                    int ID_Subject = Integer.parseInt((listSubject.getData().get(pos).getSubjectId()));
+                    String title_Subject = listSubject.getData().get(pos).getTitle();
+                    int ID_SubjectGroup = Integer.parseInt(listSubject.getData().get(pos).getSubjectId());
+                    for(int i = 0; i < categoryParentList.size(); i++){
+
+                    }
+                }
+
+
+                System.out.println("respone info");
+                System.out.println("status: " + listSubject.getStatus());
+                for (int pos = 0; pos < listSubject.getData().size(); pos++) {
+                    System.out.println("data: " + pos + " :" + listSubject.getData().get(pos).getTitle());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
 
         //feed data
-        categoryParentList = new ArrayList<>();
+//        categoryParentList = new ArrayList<>(); //declare above
         for (int i = 0; i < 20; i++) {
             CategoryParent categoryParent = new CategoryParent();
             categoryParent.setTitle("Parent");
@@ -99,4 +162,12 @@ public class ChooseCategory extends AppCompatActivity {
 
     }
 
+    private boolean isHaveParentList(int ID_PostSubject) {
+        for (int i = 0; i < categoryParentList.size(); i++) {
+            if (ID_PostSubject == categoryParentList.get(i).getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
