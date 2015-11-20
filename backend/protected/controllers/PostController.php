@@ -48,6 +48,17 @@ class PostController extends Controller {
         ResponseHelper::JsonReturnSuccess($url, 'Success');
     }
 
+    public function actionGetPost() {
+        $request = Yii::app()->request;
+        try {
+            $post_id = StringHelper::filterString($request->getQuery('post_id'));
+            $data = Post::model()->getPostById($post_id);
+            ResponseHelper::JsonReturnSuccess($data, 'success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
