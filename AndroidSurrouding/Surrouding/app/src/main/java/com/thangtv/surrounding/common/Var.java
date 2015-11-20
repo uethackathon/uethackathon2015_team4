@@ -5,9 +5,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-/**
- * Created by uendno on 14-Nov-15.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Var {
 
     //show Toast
@@ -30,4 +31,6 @@ public class Var {
                 .getDefaultSharedPreferences(context.getApplicationContext());
         return settings.getString(key, null);
     }
+
+    public static List<Integer> selectedCategoryIDs;
 }

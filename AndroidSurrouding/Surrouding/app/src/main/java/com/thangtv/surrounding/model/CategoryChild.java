@@ -1,18 +1,28 @@
 package com.thangtv.surrounding.model;
 
-import java.util.Date;
 
-/**
- * Created by uendno on 17/11/2015.
- */
 public class CategoryChild {
 
     private String title;
-    private boolean isChecked;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public CategoryChild() {
+        title = null;
+
+    }
 
     public CategoryChild(String title) {
         this.title = title;
     }
+
 
     public String getTitle() {
         return title;
@@ -20,13 +30,5 @@ public class CategoryChild {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setIsChecked(boolean isChecked) {
-        this.isChecked = isChecked;
     }
 }
