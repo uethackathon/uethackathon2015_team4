@@ -22,6 +22,7 @@ class PostController extends Controller {
             $lng = StringHelper::filterString($request->getQuery('lng'));
             $user_id = StringHelper::filterString($request->getQuery('user_id'));
             $data = Post::model()->getPostNearBy($lat, $lng, $user_id);
+            ResponseHelper::JsonReturnSuccess($data, 'success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }
