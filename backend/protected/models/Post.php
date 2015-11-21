@@ -66,38 +66,12 @@ class Post extends BasePost {
         $sql = "SELECT p.post_id, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) as distance FROM post p JOIN location l ON p.location_id = l.location_id "
                 . "JOIN post_subject s ON p.post_id = s.post_id WHERE s.subject_id IN $user_subject GROUP BY l.location_id HAVING distance < 4 LIMIT $offset, $limit";
         $data = Yii::app()->db->createCommand($sql)->queryAll();
-//        var_dump($data);
-//        die;
         foreach ($data as $key => $item) {
             $itemArr = array();
             $itemArr = $this->getPostById($item['post_id'], $user_id);
             $returnArr[] = $itemArr;
         }
         return $returnArr;
-
-
-//        $returnArr = array();
-//        $subject_
-//        $arr = array();
-//        $criteria = new CDbCriteria;
-//        $criteria->select = "t.*, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( lat ) ) ) ) as
-//            distance";
-//        $criteria->having = 'distance < 4';
-//        $criteria->group = 't.location_id';
-//        $data = Location::model()->findAll($criteria);
-//        foreach ($data as $t) {
-//            $arr[$t->id] = $t->attributes;
-//        }
-//        foreach ($arr as $item) {
-//            $itemArr = array();
-//            if()
-//            $itemArr = $this->getPostByLocation($user_id, $item->location_id, $limit, $offset);
-//            foreach ($itemArr as $arr) {
-//
-//                $returnArr[] = $arr;
-//            }
-//        }
-//        return $returnArr;
     }
 
     public function getPostById($id, $user_id) {
