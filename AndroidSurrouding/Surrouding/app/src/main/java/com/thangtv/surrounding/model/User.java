@@ -19,7 +19,25 @@ public class User implements Serializable{
     private String gender;
     private String phoneNumber;
     private Bitmap avatar;
+    private Bitmap cover;
     private String description;
+    private String carrer;
+
+    public Bitmap getCover() {
+        return cover;
+    }
+
+    public void setCover(Bitmap cover) {
+        this.cover = cover;
+    }
+
+    public String getCarrer() {
+        return carrer;
+    }
+
+    public void setCarrer(String carrer) {
+        this.carrer = carrer;
+    }
 
     public int getId() {
         return id;

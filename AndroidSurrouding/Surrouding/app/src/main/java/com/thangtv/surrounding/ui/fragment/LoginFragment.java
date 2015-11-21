@@ -36,7 +36,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_login, container, false);
 
-        editUsername = (EditText)  view.findViewById(R.id.edit_username);
+        editUsername = (EditText)  view.findViewById(R.id.edit_email);
         editPass= (EditText) view.findViewById(R.id.edit_password);
         btnLogin = (Button) view.findViewById(R.id.btn_login);
         btnForgotPass = (Button) view.findViewById(R.id.btn_forgot_password);

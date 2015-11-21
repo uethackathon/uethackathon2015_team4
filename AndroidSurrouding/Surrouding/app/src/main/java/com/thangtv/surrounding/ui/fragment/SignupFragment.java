@@ -37,7 +37,7 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
-        editEmail = (EditText) view.findViewById(R.id.edit_username);
+        editEmail = (EditText) view.findViewById(R.id.edit_email);
         editPass = (EditText) view.findViewById(R.id.edit_password);
         editConfirmPass = (EditText) view.findViewById(R.id.edit_confirm_password);
         btnSignup = (Button) view.findViewById(R.id.btn_signup);

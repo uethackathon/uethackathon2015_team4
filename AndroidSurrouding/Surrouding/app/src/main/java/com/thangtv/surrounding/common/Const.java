@@ -31,6 +31,19 @@ public class Const {
     //RC edit profle
     public static final int RC_EDIT_PROFILE = 3;
 
+    public static final int RC_AVATAR_REQUEST_CAMERA = 4;
+
+    public static final int RC_AVATAR_SELECT_FILE = 5;
+
+    public static final int RC_AVATAR_CROP = 6;
+
+    public static final int RC_COVER_REQUEST_CAMERA = 4;
+
+    public static final int RC_COVER_SELECT_FILE = 5;
+
+    public static final int RC_COVER_CROP = 6;
+
+
     // Bound the suggested result in Viet Nam first
     public static final LatLngBounds MAP_BOUNDS_NORTH_VIETNAM = new LatLngBounds(
             new LatLng(20.814116, 103.706864), new LatLng(22.697388, 106.589234));
@@ -43,4 +56,5 @@ public class Const {
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_USER = "user";
+
 }
