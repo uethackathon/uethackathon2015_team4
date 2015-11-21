@@ -8,7 +8,10 @@ class PostController extends Controller {
 
     public function actionAdd() {
         $attr = StringHelper::filterArrayString($_POST);
-        $image = $_FILES['image'];
+        $image = null;
+        if (isset($_FILES['image'])) {
+            $image = $_FILES['image'];
+        }
         if (Post::model()->add($attr, $image)) {
             ResponseHelper::JsonReturnSuccess('', 'success');
         } else {

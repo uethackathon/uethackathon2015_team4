@@ -14,8 +14,17 @@ class Post extends BasePost {
         $model->date = time();
         $model->post_comment_count = 0;
         $model->post_like_count = 0;
-        $image_url = UploadHelper::getUrlUploadSingleImage($image, $attr['user_id']);
+        $image_url = null;
+        if (isset($image)) {
+            $image_url = UploadHelper::getUrlUploadSingleImage($image, $attr['user_id']);
+        }
+        $location = new Location;
+        $location->longitude = $attr['lng'];
+        $location->latitude = $attr['lat'];
+        $location->name = $attr['name'];
+        $location->save(FALSE);
         $model->image = $image_url;
+        $model->location_id = $location->location_id;
         if ($model->save(FALSE)) {
             $subject_arr = json_decode($attr['subject'], true);
             foreach ($subject_arr as $item) {

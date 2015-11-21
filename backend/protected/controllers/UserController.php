@@ -12,7 +12,12 @@ class UserController extends Controller {
 
     public function actionRegister() {
         $attr = StringHelper::filterArrayString($_POST);
-        $result = User::model()->register($attr);
+        $image = NULL;
+        if(isset($_FILES['image']))
+        {
+            $image = $_FILES['image'];
+        }
+        $result = User::model()->register($attr, $image);
         switch ($result) {
             case 'USER_EXIST':
                 ResponseHelper::JsonReturnError('', 'user exist');
