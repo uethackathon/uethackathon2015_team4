@@ -42,6 +42,7 @@ class UserController extends Controller {
         $message = User::model()->updateProfile($attr, $obj_file);
         ResponseHelper::JsonReturnSuccess('', $message);
     }
+    
 
     // Uncomment the following methods and override them if needed
     /*

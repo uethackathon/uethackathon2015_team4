@@ -12,10 +12,10 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/edit_username"
+            android:id="@+id/edit_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/your_username"
+            android:hint="@string/your_email"
             android:inputType="text"
             android:textColor="@color/color_accent" />
     </android.support.design.widget.TextInputLayout>

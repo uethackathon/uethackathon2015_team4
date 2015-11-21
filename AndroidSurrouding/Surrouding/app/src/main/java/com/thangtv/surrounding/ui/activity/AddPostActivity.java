@@ -49,7 +49,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
                 startActivityForResult(intent, Const.RC_CHOOSE_LOCATION);
                 break;
             case R.id.edit_category:
-                Intent intent1 = new Intent(AddPostActivity.this, ChooseCategory.class);
+                Intent intent1 = new Intent(AddPostActivity.this, ChooseCategoryActivity.class);
                 startActivityForResult(intent1, Const.RC_CHOOSE_CATEFORY);
                 break;
 

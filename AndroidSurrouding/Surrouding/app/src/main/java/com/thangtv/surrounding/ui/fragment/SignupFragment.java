@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.thangtv.surrounding.R;
+import com.thangtv.surrounding.common.Const;
+import com.thangtv.surrounding.model.User;
 import com.thangtv.surrounding.ui.activity.EditProfileActivity;
 
 /**
@@ -19,7 +21,7 @@ import com.thangtv.surrounding.ui.activity.EditProfileActivity;
  */
 public class SignupFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
 
-    private EditText editUsername;
+    private EditText editEmail;
     private EditText editPass;
     private EditText editConfirmPass;
     private Button btnSignup;
@@ -35,7 +37,7 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
-        editUsername = (EditText) view.findViewById(R.id.edit_username);
+        editEmail = (EditText) view.findViewById(R.id.edit_email);
         editPass = (EditText) view.findViewById(R.id.edit_password);
         editConfirmPass = (EditText) view.findViewById(R.id.edit_confirm_password);
         btnSignup = (Button) view.findViewById(R.id.btn_signup);
@@ -57,9 +59,9 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
     private void signup() {
 
         //validation
-        if (editUsername.getText().toString().trim().equals("")) {
+        if (editEmail.getText().toString().trim().equals("")) {
             Toast.makeText(getActivity(), getString(R.string.you_must_enter_your_username), Toast.LENGTH_SHORT).show();
-            editUsername.requestFocus();
+            editEmail.requestFocus();
             return;
         }
 
@@ -79,6 +81,21 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
 
         //send user to editProfileActivity
         Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-        startActivity(intent);
+        User user = new User();
+        intent.putExtra(Const.KEY_USER, user);
+        startActivityForResult(intent, Const.RC_EDIT_PROFILE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Const.RC_EDIT_PROFILE:
+
+                //sign up user
+
+
+
+        }
     }
 }
