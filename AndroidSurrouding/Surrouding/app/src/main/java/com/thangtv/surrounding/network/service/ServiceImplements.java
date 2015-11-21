@@ -29,4 +29,17 @@ public interface ServiceImplements {
             ,@Field("phone")String phone,@Field("career") String career
             ,@Field("gender")String gender,@Field("description") String description);
 
+    @Multipart
+    @POST("/hackathon/user/register")
+    Call<PostRegister> postLoginWithImage(@Part("image\"; filename=\"image.jpg\" \"") RequestBody file
+            ,@Path("email") String email, @Path("password") String password
+            ,@Path("first_name") String first_name,@Path("date")String date
+            ,@Path("phone")String phone,@Path("career") String career
+            ,@Path("gender")String gender,@Path("description") String description);
+
+    @FormUrlEncoded
+    @POST("/hackathon/post/add")
+    Call<PostRegister> postPost(@Field("user_id") String user_id, @Field("content") String content
+            ,@Field("subject") String subject,@Field("lat")String lat
+            ,@Field("lng")String lng,@Field("name") String name);
 }
