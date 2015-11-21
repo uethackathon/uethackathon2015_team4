@@ -6,9 +6,13 @@ class SubjectController extends Controller {
         $this->render('index');
     }
 
-    public function acitonGetAllSubject() {
-        $data = Subject::model()->findAll();
-        ResponseHelper::JsonReturnSuccess($data, 'Success');
+    public function actionGetAllSubject() {
+        try {
+            $data = Subject::model()->getAllSubject();
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
     }
 
     public function actionGetSubjectByUser() {

@@ -31,10 +31,38 @@ class Subject extends BaseSubject {
     }
 
     public function findSubjectGroupBySubject($subject_id) {
-        $subject_group = Subject::model()->findByAttributes(array('subject_id' => $subject_id));
-        return $subject_group->subject_group_id;
+        $subject = Subject::model()->findByAttributes(array('subject_id' => $subject_id));
+        $name = SubjectGroup::model()->findByAttributes(array('subject_group_id' => $subject->subject_group_id));
+        return $name->name;
+        // return 'tt';
     }
-    
-   //
 
+    public function findSubjectBySubjectGroup($subject_group_id) {
+        $subject = Subject::model()->findAllByAttributes(array('subject_group_id' => $subject_group_id));
+        $returnArr = array();
+        foreach ($subject as $item) {
+            $itemArr = array();
+            $itemArr['subject_id'] = $item->subject_id;
+            $itemArr['subject_group_id'] = $item->subject_group_id;
+            $itemArr['title'] = $item->title;
+            $itemArr['description'] = $item->description;
+            $itemArr['subject_group_name'] = $this->findSubjectGroupBySubject($item->subject_id);
+            //var_dump($this->findSubjectGroupBySubject($item->subject_id)); die;
+            $returnArr[] = $itemArr;
+        }
+        return $returnArr;
+    }
+
+    public function getAllSubject() {
+        $subject_group = SubjectGroup::model()->findAll();
+        $returnArr = array();
+        foreach ($subject_group as $item) {
+            $itemArr = array();
+            $itemArr = $this->findSubjectBySubjectGroup($item->subject_group_id);
+            $returnArr[] = $itemArr;
+        }
+        return $returnArr;
+    }
+
+//
 }
