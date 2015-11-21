@@ -29,4 +29,12 @@ class PostLike extends BasePostLike {
         return FALSE;
     }
 
+    public function checkLike($post_id, $user_id) {
+        $check = PostLike::model()->findByAttributes(array('post_id' => $post_id, 'user_id' => $user_id));
+        if ($check) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
 }

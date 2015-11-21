@@ -112,6 +112,21 @@ class PostController extends Controller {
         }
     }
 
+    public function actionCheckLike() {
+        $request = Yii::app()->request;
+        try {
+            $post_id = StringHelper::filterString($request->getQuery('post_id'));
+            $user_id = StringHelper::filterString($request->getQuery('user_id'));
+            if (PostLike::model()->checkLike($post_id, $user_id)) {
+                ResponseHelper::JsonReturnSuccess('', 'liked');
+            } else {
+                ResponseHelper::JsonReturnError('', 'not like');
+            }
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
