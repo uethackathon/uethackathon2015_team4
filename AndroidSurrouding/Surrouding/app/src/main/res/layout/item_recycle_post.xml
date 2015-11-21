@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    card_view:cardElevation="@dimen/cardview_default_elevation"
+    card_view:cardCornerRadius="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:id="@+id/container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/avatar"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/user_no_avatar"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="0dp" />
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center"
+                        android:text="User name"
+                        android:textColor="@color/color_primary_text" />
+
+
+
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/content"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mình đang là sinh viên chưa có xe nên cần rất cực kì là nhiều xe đưa đón tận nơi miễn phí"
+                    android:textColor="@color/color_primary_text" />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:layout_marginRight="8dp"
+                android:id="@+id/button_like"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="84dp"
+                android:layout_height="wrap_content"
+                android:text="LIKE"
+                android:textColor="@color/color_accent"
+                android:layout_weight="0.10" />
+
+
+        </LinearLayout>
+
+        <include layout="@layout/divider2" />
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:textSize="14sp"
+            android:id="@+id/likes_and_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="3 like(s)    3 comment(s)"
+            android:textColor="@color/color_primary_text" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
