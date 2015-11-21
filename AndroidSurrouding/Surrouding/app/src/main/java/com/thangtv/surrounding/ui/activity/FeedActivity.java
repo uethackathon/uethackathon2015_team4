@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.thangtv.surrounding.adapter.ViewPagerAdapter;
 import com.thangtv.surrounding.adapter.ViewPagerAdapterIconOnly;
+import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.controller.PlaceData;
 import com.thangtv.surrounding.ui.fragment.FeedFragment;
 import com.thangtv.surrounding.ui.fragment.MapFragment;
@@ -50,6 +52,8 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+// test get description from server
+//        Toast.makeText(FeedActivity.this, "Descriptions: " + Var.currentUser.getDescription(),Toast.LENGTH_LONG).show();
         //set up fragment manager
         fragmentManager = getSupportFragmentManager();
 

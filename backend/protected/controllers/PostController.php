@@ -57,7 +57,8 @@ class PostController extends Controller {
         $request = Yii::app()->request;
         try {
             $post_id = StringHelper::filterString($request->getQuery('post_id'));
-            $data = Post::model()->getPostById($post_id);
+            $user_id = StringHelper::filterString($request->getQuery('user_id'));
+            $data = Post::model()->getPostById($post_id, $user_id, 2);
             ResponseHelper::JsonReturnSuccess($data, 'success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
@@ -86,11 +87,8 @@ class PostController extends Controller {
         try {
             $post_id = StringHelper::filterString($request->getPost('post_id'));
             $user_id = StringHelper::filterString($request->getPost('user_id'));
-            if (PostLike::model()->like($post_id, $user_id)) {
-                ResponseHelper::JsonReturnSuccess('', 'success');
-            } else {
-                ResponseHelper::JsonReturnError('', 'server error');
-            }
+            $message = PostLike::model()->like($post_id, $user_id);
+            ResponseHelper::JsonReturnSuccess('', $message);
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }
@@ -106,6 +104,21 @@ class PostController extends Controller {
                 ResponseHelper::JsonReturnSuccess('', 'success');
             } else {
                 ResponseHelper::JsonReturnError('', 'server error');
+            }
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionCheckLike() {
+        $request = Yii::app()->request;
+        try {
+            $post_id = StringHelper::filterString($request->getPost('post_id'));
+            $user_id = StringHelper::filterString($request->getPost('user_id'));
+            if (PostLike::model()->checkLike($post_id, $user_id)) {
+                ResponseHelper::JsonReturnSuccess('', 'liked');
+            } else {
+                ResponseHelper::JsonReturnError('', 'not like');
             }
         } catch (Exception $ex) {
             var_dump($ex->getMessage());

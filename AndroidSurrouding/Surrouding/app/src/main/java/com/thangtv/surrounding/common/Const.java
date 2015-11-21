@@ -56,5 +56,6 @@ public class Const {
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_USER = "user";
+    public static final String KEY_CAREER = "career";
 
 }

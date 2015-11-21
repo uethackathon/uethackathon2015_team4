@@ -1,5 +1,6 @@
 package com.thangtv.surrounding.ui.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -51,6 +52,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
 
     private Uri avatarUri;
+    private Bitmap bitmap;
 
 
     @Override
@@ -212,7 +214,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
             if (requestCode == Const.RC_AVATAR_CROP) {
                 Bundle extras = data.getExtras();
-                Bitmap bitmap = extras.getParcelable("data");
+                bitmap = extras.getParcelable("data");
                 editAvatar.setImageBitmap(bitmap);
             }
 
@@ -263,14 +265,34 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     return false;
                 }
 
+                if (editCarrer.getText().toString().trim().equals("")) {
+                    Toast.makeText(EditProfileActivity.this, "You must tell about your career", Toast.LENGTH_SHORT).show();
+                    editCarrer.requestFocus();
+                    return false;
+                }
+
                 if (editDescription.getText().toString().trim().equals("")) {
                     Toast.makeText(EditProfileActivity.this, getString(R.string.you_must_tell_something_about_yourself), Toast.LENGTH_SHORT).show();
                     editDescription.requestFocus();
                     return false;
                 }
 
-                progressDialog.show();
 
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra(Const.KEY_NAME, editName.getText().toString());
+                returnIntent.putExtra(Const.KEY_DOB, editDateOfBirth.getText().toString());
+                if (editGender.getSelectedItemPosition() == 0) {
+                    returnIntent.putExtra(Const.KEY_GENDER, "Male");
+                } else {
+                    returnIntent.putExtra(Const.KEY_GENDER, "Female");
+                }
+
+                returnIntent.putExtra(Const.KEY_AVATAR, bitmap);
+                returnIntent.putExtra(Const.KEY_CAREER, editCarrer.getText().toString());
+                returnIntent.putExtra(Const.KEY_DESCRIPTION, editDescription.getText().toString());
+
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
                 //Check if we should signUpUser or updateUser and then send user to MapViewActivity
 
                 return true;

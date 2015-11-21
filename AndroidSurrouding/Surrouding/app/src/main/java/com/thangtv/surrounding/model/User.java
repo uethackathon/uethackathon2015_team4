@@ -22,6 +22,22 @@ public class User implements Serializable{
     private String description;
     private String carrer;
 
+    public User() {
+    }
+
+    public User(int id, String email, String password, String name, Calendar dob, String gender, String phoneNumber, Bitmap avatar, String description, String carrer) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.dob = dob;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
+        this.description = description;
+        this.carrer = carrer;
+    }
+
     public String getCarrer() {
         return carrer;
     }

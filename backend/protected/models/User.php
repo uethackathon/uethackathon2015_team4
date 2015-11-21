@@ -40,12 +40,23 @@ class User extends BaseUser {
         return $data->first_name . " " . $data->last - name;
     }
 
+    public function getUserInfoById($id) {
+        $returnArr = array();
+        $data = User::model()->findByPk($id);
+        $returnArr['username'] = $data->first_name . " " . $data->last_name;
+        $returnArr['user_id'] = $data->userid;
+        $returnArr['avatar'] = $data->avatar;
+        return $returnArr;
+    }
+
     public function updateProfile($attr, $obj_files) {
         $check = User::model()->findByPk($attr['user_id']);
         if ($check) {
             $check->setAttributes($attr);
-            $avatar = UploadHelper::getUrlUploadSingleImage($obj_files, $attr['user_id']);
-            $check->avatar = $avatar;
+            if (isset($obj_files)) {
+                $avatar = UploadHelper::getUrlUploadSingleImage($obj_files, $attr['user_id']);
+                $check->avatar = $avatar;
+            }
             if ($check->save(FALSE)) {
                 return 'success';
             } else {
