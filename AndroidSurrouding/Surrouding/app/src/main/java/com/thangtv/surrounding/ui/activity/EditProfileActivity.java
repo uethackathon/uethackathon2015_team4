@@ -42,17 +42,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private EditText editDateOfBirth;
     private EditText editPhone;
     private EditText editDescription;
+    private EditText editCarrer;
     private Spinner editGender;
     private ImageView editAvatar;
-    private ImageView editCover;
-    private Button buttonChangeCover;
     private Button buttonChangeAvatar;
     private ProgressDialog progressDialog;
 
 
 
     private Uri avatarUri;
-    private Uri coverUri;
 
 
     @Override
@@ -70,16 +68,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         editPhone = (EditText) findViewById(R.id.edit_phone_number);
         editDescription = (EditText) findViewById(R.id.edit_description);
         editAvatar = (ImageView) findViewById(R.id.edit_avatar);
-        editCover = (ImageView) findViewById(R.id.edit_cover);
+        editCarrer = (EditText) findViewById(R.id.edit_carrer);
         editGender = (Spinner) findViewById(R.id.edit_gender);
         buttonChangeAvatar = (Button) findViewById(R.id.button_change_avatar);
-        buttonChangeCover = (Button) findViewById(R.id.button_change_cover);
+
 
         //Set up button change avatar
         buttonChangeAvatar.setOnClickListener(this);
-
-        //set up button change cover
-        buttonChangeCover.setOnClickListener(this);
 
         //set up date of birth input field
         editDateOfBirth.setFocusable(false);
@@ -96,6 +91,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     + Var.currentUser.getDob().get(Calendar.YEAR));
             editPhone.setText(Var.currentUser.getPhoneNumber());
             editDescription.setText(Var.currentUser.getDescription());
+            editCarrer.setText(Var.currentUser.getCarrer());
 
             if (Var.currentUser.getGender().equals("Male")) {
                 editGender.setSelection(0);
@@ -104,7 +100,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
 
             editAvatar.setImageBitmap(Var.currentUser.getAvatar());
-            editCover.setImageBitmap(Var.currentUser.getCover());
         }
 
         //Set up gender spinner
@@ -128,9 +123,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             case R.id.button_change_avatar:
                 selectAvatar();
                 break;
-            case R.id.button_change_cover:
-                selectCover();
-                break;
 
             case R.id.edit_date_of_birth:
                 showDatePicker();
@@ -138,7 +130,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void selectCover() {
+
+    private void selectAvatar() {
 
         PopupMenu popupMenu = new PopupMenu(EditProfileActivity.this, buttonChangeAvatar);
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu_select_image, popupMenu.getMenu());
@@ -152,9 +145,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                        //Set coverUri points to new file where we save avatar
-                        coverUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "avatar_" + String.valueOf(System.currentTimeMillis()) + ".jpg"));
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, coverUri);
+                        //Set picUri points to new file where we save avatar
+                        avatarUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "avatar_" + String.valueOf(System.currentTimeMillis()) + ".jpg"));
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, avatarUri);
                         try {
                             intent.putExtra("return-data", true);
                             startActivityForResult(intent, Const.RC_AVATAR_REQUEST_CAMERA);
@@ -171,50 +164,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         break;
                     case R.id.remove_picture:
                         editAvatar.setImageResource(R.drawable.user_no_avatar);
-                        /*bitmapAvatar = ((BitmapDrawable) editAvatar.getDrawable()).getBitmap();*/
-                        break;
-                }
-                return true;
-
-            }
-        });
-        popupMenu.show();
-
-    }
-
-    private void selectAvatar() {
-
-        PopupMenu popupMenu = new PopupMenu(EditProfileActivity.this, buttonChangeAvatar);
-        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_select_image, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.take_picture:
-
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                        //Set avatarUri points to new file where we save avatar
-                        avatarUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "cover_" + String.valueOf(System.currentTimeMillis()) + ".jpg"));
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, avatarUri);
-                        try {
-                            intent.putExtra("return-data", true);
-                            startActivityForResult(intent, Const.RC_COVER_REQUEST_CAMERA);
-                        } catch (ActivityNotFoundException e) {
-                            Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-
-                        break;
-                    case R.id.choose_from_gallery:
-
-                        Intent intent1 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        intent1.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intent1, "select file"), Const.RC_COVER_SELECT_FILE);
-                        break;
-                    case R.id.remove_picture:
-                        editCover.setImageResource(R.color.color_accent);
                         /*bitmapAvatar = ((BitmapDrawable) editAvatar.getDrawable()).getBitmap();*/
                         break;
                 }
@@ -265,105 +214,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 Bundle extras = data.getExtras();
                 Bitmap bitmap = extras.getParcelable("data");
                 editAvatar.setImageBitmap(bitmap);
-
-                //save avatar to sdcard/surrounding/image
-
-                //get path to external storage (SD card)
-                File storageDir = new File(Const.imagePath);
-
-                //create storage directories, if they don't exist
-                storageDir.mkdirs();
-
-                try {
-                    String filePath = storageDir.toString() + "/" +Var.currentUser.getId()+"_"+System.currentTimeMillis()+".png";
-                    FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-
-                    BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
-
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-
-                    bos.flush();
-                    bos.close();
-
-                    Toast.makeText(EditProfileActivity.this, "Saved " +filePath, Toast.LENGTH_SHORT).show();
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(EditProfileActivity.this, "Not Saved", Toast.LENGTH_SHORT).show();
-                    Log.d("TEST_SAVE",e.getMessage());
-                }
-
-            }
-
-            if (requestCode == Const.RC_COVER_SELECT_FILE) {
-                coverUri = data.getData();
-                try {
-                    Intent cropIntent = new Intent("com.android.camera.action.CROP");
-                    cropIntent.setDataAndType(coverUri, "image/*");
-                    cropIntent.putExtra("crop", "true");
-                    cropIntent.putExtra("aspectX", 1);
-                    cropIntent.putExtra("aspectY", 1);
-                    cropIntent.putExtra("outputX", 480);
-                    cropIntent.putExtra("outputY", 480);
-                    cropIntent.putExtra("return-data", true);
-                    startActivityForResult(cropIntent, Const.RC_COVER_CROP);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-            if (requestCode == Const.RC_COVER_REQUEST_CAMERA) {
-                try {
-                    Intent cropIntent = new Intent("com.android.camera.action.CROP");
-                    cropIntent.setDataAndType(coverUri, "image/*");
-                    cropIntent.putExtra("crop", "true");
-                    cropIntent.putExtra("aspectX", 1);
-                    cropIntent.putExtra("aspectY", 1);
-                    cropIntent.putExtra("outputX", 480);
-                    cropIntent.putExtra("outputY", 480);
-                    cropIntent.putExtra("return-data", true);
-                    startActivityForResult(cropIntent, Const.RC_COVER_CROP);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-            if (requestCode == Const.RC_COVER_CROP) {
-                Bundle extras = data.getExtras();
-                Bitmap bitmap = extras.getParcelable("data");
-                editCover.setImageBitmap(bitmap);
-
-                //save avatar to sdcard/surrounding/image
-
-                //get path to external storage (SD card)
-                File storageDir = new File(Const.imagePath);
-
-                //create storage directories, if they don't exist
-                storageDir.mkdirs();
-
-                try {
-                    String filePath = storageDir.toString() + "/" +Var.currentUser.getId()+"_"+System.currentTimeMillis()+".png";
-                    FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-
-                    BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
-
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-
-                    bos.flush();
-                    bos.close();
-
-                    Toast.makeText(EditProfileActivity.this, "Saved " +filePath, Toast.LENGTH_SHORT).show();
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(EditProfileActivity.this, "Not Saved", Toast.LENGTH_SHORT).show();
-                    Log.d("TEST_SAVE",e.getMessage());
-                }
-
             }
 
         }
     }
+
 
     private void showDatePicker() {
         Calendar now = Calendar.getInstance();
