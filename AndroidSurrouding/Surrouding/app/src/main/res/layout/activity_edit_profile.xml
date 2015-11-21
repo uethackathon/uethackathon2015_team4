@@ -66,23 +66,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <EditText
-                        android:layout_weight="4"
                         android:id="@+id/edit_date_of_birth"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="4"
                         android:hint="@string/choose_date_of_birth"
                         android:inputType="text"
-                        android:textColor="@color/color_accent"
-                        android:layout_marginRight="16dp"/>
+                        android:textColor="@color/color_accent" />
+
                     <Spinner
-                        android:layout_weight="1"
-                        android:layout_marginRight="0dp"
                         android:id="@+id/edit_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        >
-                    </Spinner>
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"></Spinner>
 
                 </LinearLayout>
 
@@ -102,48 +102,19 @@
                     android:src="@drawable/ic_photo_camera_grey_700_24dp" />
 
                 <ImageView
+                    android:id="@+id/edit_avatar"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:src="@drawable/user_no_avatar"
                     android:paddingTop="6dp"
-                    android:id="@+id/edit_avatar"/>
+                    android:src="@drawable/user_no_avatar" />
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/change"
-                    android:theme="@style/AccentColorButtons"
                     android:id="@+id/button_change_avatar"
-                    android:textColor="@color/mdtp_white"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="16dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/icon_right_margin"
-                    android:paddingTop="6dp"
-                    android:src="@drawable/ic_picture_in_picture_grey_700_24dp" />
-
-                <ImageView
-                    android:layout_width="128dp"
-                    android:layout_height="72dp"
-                    android:src="@color/color_accent"
-                    android:paddingTop="6dp"
-                    android:id="@+id/edit_cover"/>
-
-                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/change"
-                    android:theme="@style/AccentColorButtons"
-                    android:id="@+id/button_change_cover"
-                    android:textColor="@color/mdtp_white"/>
+                    android:textColor="@color/mdtp_white"
+                    android:theme="@style/AccentColorButtons" />
             </LinearLayout>
 
             <LinearLayout
@@ -163,6 +134,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="@string/enter_your_phone_number"
+                    android:inputType="number"
+                    android:textColor="@color/color_accent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:src="@drawable/ic_accessibility_grey_700_24dp" />
+
+                <EditText
+                    android:id="@+id/edit_carrer"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@string/enter_your_carrer"
                     android:inputType="number"
                     android:textColor="@color/color_accent" />
             </LinearLayout>

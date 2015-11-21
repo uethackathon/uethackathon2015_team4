@@ -16,6 +16,7 @@
     <string name="you_must_enter_your_password">You must enter your Password!</string>
     <string name="you_must_confirm_your_password">You must confirm your Password!</string>
     <string name="enter_your_name">Enter your name</string>
+    <string name="enter_your_carrer">Enter your carrer</string>
     <string name="choose_date_of_birth">Choose your date of birth</string>
     <string name="change">Change</string>
     <string name="enter_your_phone_number">Enter your phone number</string>
