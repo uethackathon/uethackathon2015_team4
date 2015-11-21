@@ -23,7 +23,6 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
 
     private EditText editEmail;
     private EditText editPass;
-    private EditText editConfirmPass;
     private Button btnSignup;
 
     public SignupFragment() {
@@ -39,7 +38,6 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
 
         editEmail = (EditText) view.findViewById(R.id.edit_email);
         editPass = (EditText) view.findViewById(R.id.edit_password);
-        editConfirmPass = (EditText) view.findViewById(R.id.edit_confirm_password);
         btnSignup = (Button) view.findViewById(R.id.btn_signup);
 
         btnSignup.setOnClickListener(this);
@@ -71,17 +69,12 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
             return;
         }
 
-        if (editConfirmPass.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.you_must_enter_your_password), Toast.LENGTH_SHORT).show();
-            editPass.requestFocus();
-            return;
-        }
-
         //check username
 
         //send user to editProfileActivity
         Intent intent = new Intent(getActivity(), EditProfileActivity.class);
         User user = new User();
+
         intent.putExtra(Const.KEY_USER, user);
         startActivityForResult(intent, Const.RC_EDIT_PROFILE);
     }

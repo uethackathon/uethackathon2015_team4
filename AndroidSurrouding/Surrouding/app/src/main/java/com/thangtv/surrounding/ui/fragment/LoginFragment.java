@@ -103,13 +103,17 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
                     try {
                         Var.showToast(getContext(), response.errorBody().string());
 
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
 
                 PostLogin user = response.body();
-                if (user == null) return;
+                if (user == null || user.getStatus() != 1){
+                    Var.showToast(getContext(), "Can't connect server !");
+                    return;
+                }
                 int userid = Integer.parseInt(user.getData().getUserid());
                 User user_android = new User(Integer.parseInt(user.getData().getUserid()), user.getData().getEmail(), user.getData().getPassword()
                         , user.getData().getFirstName() + " " + user.getData().getLastName(), Var.timestampToCalendar(user.getData().getDate()), user.getData().getGender(), user.getData().getPhone(), Var.getBitmapFromURL(user.getData().getAvatar())
@@ -124,6 +128,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
                 // add user
                 Var.saveObject(getContext(), Const.KEY_USER, user_android);
                 Var.currentUser = user_android;
+                Var.showToast(getContext(), "Login success!");
                 Intent intent = new Intent(getActivity(), FeedActivity.class);
                 startActivity(intent);
             }
