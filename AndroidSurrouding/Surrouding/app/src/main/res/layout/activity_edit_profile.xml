@@ -155,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="@string/enter_your_carrer"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:textColor="@color/color_accent" />
             </LinearLayout>
 

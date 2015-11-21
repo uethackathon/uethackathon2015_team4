@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -14,6 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -74,6 +78,31 @@ public class Var {
         return c;
     }
 
+    public static String calendarToTimestamp(String calendar){
+        try{
+            String dateString = "";
+            String[] splitsTime = calendar.split("/");
+            if (splitsTime[0].length()!=2)
+                dateString += "0"+splitsTime[0]+"/";
+            else
+                dateString += splitsTime[0]+"/";
+
+            if (splitsTime[1].length()!=2)
+                dateString += "0"+splitsTime[1]+"/";
+            else
+                dateString += splitsTime[1]+"/";
+
+            dateString += splitsTime[2];
+
+            DateFormat sdf = new SimpleDateFormat("dd/mm/yyyyy");
+            Date date = sdf.parse(dateString);
+
+            return date.getTime() + "";
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);

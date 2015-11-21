@@ -3,7 +3,6 @@ package com.thangtv.surrounding.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,7 @@ import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.model.User;
 import com.thangtv.surrounding.network.model.login.PostLogin;
-import com.thangtv.surrounding.network.service.IPostLogin;
+import com.thangtv.surrounding.network.service.ServiceImplements;
 import com.thangtv.surrounding.ui.activity.FeedActivity;
 
 import retrofit.Call;
@@ -92,7 +91,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        IPostLogin service = retrofit.create(IPostLogin.class);
+        ServiceImplements service = retrofit.create(ServiceImplements.class);
 //        Call<PostLogin> call = service.postLogin("tuantmtb@gmail.com", "thaibinhcity");
         Call<PostLogin> call = service.postLogin(editUsername.getText().toString(), editPass.getText().toString());
         call.enqueue(new Callback<PostLogin>() {

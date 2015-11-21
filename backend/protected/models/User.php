@@ -8,15 +8,23 @@ class User extends BaseUser {
         return parent::model($className);
     }
 
-    public function register($attr) {
+    public function register($attr, $image) {
+
         $check = User::model()->findByAttributes(array('email' => $attr['email']));
         if ($check) {
             return 'USER_EXIST';
         } else {
+
             $model = new User;
             $model->setAttributes($attr);
             $model->password = md5($attr['password']);
             if ($model->save(FALSE)) {
+                $image_url = NULL;
+                if (isset($image)) {
+                    $image_url = UploadHelper::getUrlUploadSingleImage($image, $model->userid);
+                }
+                $model->avatar = $image_url;
+                $model->save(FALSE);
                 return 'SUCCESS';
             }
             return 'SERVER_ERROR';

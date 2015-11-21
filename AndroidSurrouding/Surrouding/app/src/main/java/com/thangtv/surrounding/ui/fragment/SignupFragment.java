@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.RequestBody;
 import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.common.Const;
+import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.model.User;
+import com.thangtv.surrounding.network.model.register.PostRegister;
+import com.thangtv.surrounding.network.service.ServiceImplements;
 import com.thangtv.surrounding.ui.activity.EditProfileActivity;
+
+import java.io.File;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
+import retrofit.http.Field;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +40,7 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
     private EditText editEmail;
     private EditText editPass;
     private Button btnSignup;
+    public static final String API_URL = "http://project.huynguyenis.me";
 
     public SignupFragment() {
         // Required empty public constructor
@@ -88,11 +104,49 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
 
                 if (resultCode == Activity.RESULT_OK) {
 
-                    //lay du lieu trong data
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(API_URL)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    ServiceImplements service = retrofit.create(ServiceImplements.class);
+
+                    String email = editEmail.getText().toString();
+                    String pass = editPass.getText().toString();
+                    String date = Var.calendarToTimestamp(data.getStringExtra(Const.KEY_DOB));
+                    String fullname = data.getStringExtra(Const.KEY_NAME);
+                    String phone = data.getStringExtra(Const.KEY_PHONE_NUMBER);
+                    String career = data.getStringExtra(Const.KEY_CAREER);
+                    String gender = data.getStringExtra(Const.KEY_GENDER);
+                    String description = data.getStringExtra(Const.KEY_DESCRIPTION);
+
+                    String filePath = data.getStringExtra("pathAvatar");
+//                    RequestBody requestBodyAvatar = getRequestBody(filePath);
+                    Log.d("filePath",filePath);
+
+                    Call<PostRegister> call = service.postLogin(email,pass, fullname, date,phone, career, gender, description);
+                    call.enqueue(new Callback<PostRegister>() {
+                        @Override
+                        public void onResponse(Response<PostRegister> response, Retrofit retrofit) {
+                            PostRegister postRegister = response.body();
+                            Log.d("Tan test register",postRegister.getStatus()+"");
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Log.d("Tan test register",t.toString()+"");
+                        }
+                    });
                 }
 
-
-
         }
+    }
+    private RequestBody getRequestBody(String filePath){
+
+//        String description = "upload image to server";
+        File file = new File(filePath);
+
+        RequestBody requestBody =
+                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        return requestBody;
     }
 }

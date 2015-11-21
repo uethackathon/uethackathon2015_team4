@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
+import com.thangtv.surrounding.ui.helper.ViewHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.BufferedOutputStream;
@@ -290,6 +292,21 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 returnIntent.putExtra(Const.KEY_AVATAR, bitmap);
                 returnIntent.putExtra(Const.KEY_CAREER, editCarrer.getText().toString());
                 returnIntent.putExtra(Const.KEY_DESCRIPTION, editDescription.getText().toString());
+
+
+                String filePath =null;
+                if (bitmap != null) {
+                    Uri uriAvatar = ViewHelper.getImageUri(EditProfileActivity.this, bitmap);
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(uriAvatar, filePathColumn, null, null, null);
+                    if (cursor.moveToFirst()) {
+                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+                        filePath = cursor.getString(column_index);
+                    }
+                    cursor.close();
+                    returnIntent.putExtra("pathAvatar", filePath);
+                }else
+                    returnIntent.putExtra("pathAvatar","");
 
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();

@@ -14,8 +14,17 @@ class Post extends BasePost {
         $model->date = time();
         $model->post_comment_count = 0;
         $model->post_like_count = 0;
-        $image_url = UploadHelper::getUrlUploadSingleImage($image, $attr['user_id']);
+        $image_url = null;
+        if (isset($image)) {
+            $image_url = UploadHelper::getUrlUploadSingleImage($image, $attr['user_id']);
+        }
+        $location = new Location;
+        $location->longitude = $attr['lng'];
+        $location->latitude = $attr['lat'];
+        $location->name = $attr['name'];
+        $location->save(FALSE);
         $model->image = $image_url;
+        $model->location_id = $location->location_id;
         if ($model->save(FALSE)) {
             $subject_arr = json_decode($attr['subject'], true);
             foreach ($subject_arr as $item) {
@@ -52,7 +61,7 @@ class Post extends BasePost {
         return $returnArr;
     }
 
-    public function getPostNearBy($lat, $lng, $user_id, $limit, $offset) {
+    public function getPostNearBy($lat, $lng, $user_id, $limit, $offset, $radius) {
         $returnArr = array();
         $user_subject_sql = "SELECT subject_id FROM user_subject WHERE user_id = $user_id";
         $user_subject_arr = Yii::app()->db->createCommand($user_subject_sql)->queryAll();
@@ -62,9 +71,12 @@ class Post extends BasePost {
                 array_push($data, $item);
             }
         }
+        if (!isset($radius)) {
+            $radius = 4;
+        }
         $user_subject = '(' . implode(', ', $data) . ')';
         $sql = "SELECT p.post_id, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) as distance FROM post p JOIN location l ON p.location_id = l.location_id "
-                . "JOIN post_subject s ON p.post_id = s.post_id WHERE s.subject_id IN $user_subject GROUP BY l.location_id HAVING distance < 4 LIMIT $offset, $limit";
+                . "JOIN post_subject s ON p.post_id = s.post_id WHERE s.subject_id IN $user_subject GROUP BY l.location_id HAVING distance < $radius LIMIT $offset, $limit";
         $data = Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($data as $key => $item) {
             $itemArr = array();
@@ -87,6 +99,7 @@ class Post extends BasePost {
         $returnArr['post_comment_count'] = $item->post_comment_count;
         $returnArr['post_like_count'] = $item->post_like_count;
         $returnArr['is_like'] = PostLike::model()->checkLike($id, $user_id);
+        $returnArr['subjects'] = $this->getSubjectByPost($item->post_id);
         if ($flag != 1) {
             $returnArr['comments'] = $this->getCommentByPost($id);
             // $returnArr[] = $itemArr;
@@ -133,6 +146,16 @@ class Post extends BasePost {
             $itemArr['content'] = $item->content;
             $itemArr['date'] = $item->date;
             $returnArr[] = $itemArr;
+        }
+        return $returnArr;
+    }
+
+    public function getSubjectByPost($post_id) {
+        $returnArr = array();
+        $subject = PostSubject::model()->findAllByAttributes(array('post_id' => $post_id));
+        foreach ($subject as $item) {
+            $subject_name = Subject::model()->findByPk($item->subject_id)->title;
+            $returnArr[] = $subject_name;
         }
         return $returnArr;
     }
