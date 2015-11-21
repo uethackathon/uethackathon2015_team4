@@ -38,11 +38,20 @@ class UserController extends Controller {
 
     public function actionUpdateProfile() {
         $attr = StringHelper::filterArrayString($_POST);
-        $obj_file = $_FILES['avatar'];
+        $obj_file = null;
+        if (isset($_FILES['avatar'])) {
+            $obj_file = $_FILES['avatar'];
+        }
         $message = User::model()->updateProfile($attr, $obj_file);
         ResponseHelper::JsonReturnSuccess('', $message);
     }
     
+    public function actionGetUserProfile()
+    {
+        $user_id = Yii::app()->request->getQuery('user_id');
+        $data = User::model()->findByPk($user_id);
+        ResponseHelper::JsonReturnSuccess($data, 'success');
+    }
 
     // Uncomment the following methods and override them if needed
     /*

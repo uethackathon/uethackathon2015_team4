@@ -24,6 +24,7 @@
  * @property integer $chatting_id
  * @property string $email
  * @property string $gender
+ * @property string $description
  *
  */
 abstract class BaseUser extends GxActiveRecord {
@@ -47,10 +48,10 @@ abstract class BaseUser extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('date, location_id, chatting_id', 'numerical', 'integerOnly'=>true),
-			array('user, password, first_name, last_name, address, avatar, cover, phone, career, email', 'length', 'max'=>255),
+			array('user, password, first_name, last_name, address, avatar, cover, phone, career, email, description', 'length', 'max'=>255),
 			array('gender', 'length', 'max'=>11),
-			array('user, password, first_name, last_name, date, address, avatar, cover, phone, career, location_id, chatting_id, email, gender', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('userid, user, password, first_name, last_name, date, address, avatar, cover, phone, career, location_id, chatting_id, email, gender', 'safe', 'on'=>'search'),
+			array('user, password, first_name, last_name, date, address, avatar, cover, phone, career, location_id, chatting_id, email, gender, description', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('userid, user, password, first_name, last_name, date, address, avatar, cover, phone, career, location_id, chatting_id, email, gender, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,6 +82,7 @@ abstract class BaseUser extends GxActiveRecord {
 			'chatting_id' => Yii::t('app', 'Chatting'),
 			'email' => Yii::t('app', 'Email'),
 			'gender' => Yii::t('app', 'Gender'),
+			'description' => Yii::t('app', 'Description'),
 		);
 	}
 
@@ -102,6 +104,7 @@ abstract class BaseUser extends GxActiveRecord {
 		$criteria->compare('chatting_id', $this->chatting_id);
 		$criteria->compare('email', $this->email, true);
 		$criteria->compare('gender', $this->gender, true);
+		$criteria->compare('description', $this->description, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
