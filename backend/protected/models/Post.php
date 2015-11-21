@@ -79,12 +79,13 @@ class Post extends BasePost {
         $item = Post::model()->findByPk($id);
         // var_dump($data); die;
 
-        $returnArr['user'] = User::model()->findByPk($item->user_id);
+        $returnArr['user'] = User::model()->getUserInfoById($item->user_id);
         $returnArr['location'] = Location::model()->findByPk($item->location_id);
         $returnArr['post_id'] = $item->post_id;
         $returnArr['content'] = $item->content;
         $returnArr['date'] = $item->date;
         $returnArr['is_like'] = PostLike::model()->checkLike($id, $user_id);
+        $returnArr['comments'] = $this->getCommentByPost($id);
         // $returnArr[] = $itemArr;
 
         return $returnArr;
@@ -115,6 +116,19 @@ class Post extends BasePost {
         foreach ($posts as $post) {
             $itemArr = array();
             $itemArr = $this->getPostById($post->post_id);
+            $returnArr[] = $itemArr;
+        }
+        return $returnArr;
+    }
+
+    public function getCommentByPost($post_id) {
+        $returnArr = array();
+        $data = Comment::model()->findAllByAttributes(array('post_id' => $post_id));
+        foreach ($data as $item) {
+            $itemArr = array();
+            $itemArr['user'] = User::model()->getUserInfoById($item->user_id);
+            $itemArr['content'] = $item->content;
+            $itemArr['date'] = $item->date;
             $returnArr[] = $itemArr;
         }
         return $returnArr;
