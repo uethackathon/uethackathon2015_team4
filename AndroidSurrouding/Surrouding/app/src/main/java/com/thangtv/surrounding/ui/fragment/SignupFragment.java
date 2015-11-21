@@ -1,6 +1,7 @@
 package com.thangtv.surrounding.ui.fragment;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -85,7 +86,10 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
         switch (requestCode) {
             case Const.RC_EDIT_PROFILE:
 
-                //sign up user
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //lay du lieu trong data
+                }
 
 
 
