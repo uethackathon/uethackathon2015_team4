@@ -126,7 +126,7 @@ class Post extends BasePost {
         $data = Comment::model()->findAllByAttributes(array('post_id' => $post_id));
         foreach ($data as $item) {
             $itemArr = array();
-            $itemArr['user'] = User::model()->getUserInfoById($item->user_id);
+            $itemArr['user'] = User::model()->getUserInfoById($item->user_comment_id);
             $itemArr['content'] = $item->content;
             $itemArr['date'] = $item->date;
             $returnArr[] = $itemArr;
