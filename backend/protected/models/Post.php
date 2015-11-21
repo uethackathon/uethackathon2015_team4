@@ -87,6 +87,7 @@ class Post extends BasePost {
         $returnArr['post_comment_count'] = $item->post_comment_count;
         $returnArr['post_like_count'] = $item->post_like_count;
         $returnArr['is_like'] = PostLike::model()->checkLike($id, $user_id);
+        $returnArr['subjects'] = $this->getSubjectByPost($item->post_id);
         if ($flag != 1) {
             $returnArr['comments'] = $this->getCommentByPost($id);
             // $returnArr[] = $itemArr;
@@ -133,6 +134,16 @@ class Post extends BasePost {
             $itemArr['content'] = $item->content;
             $itemArr['date'] = $item->date;
             $returnArr[] = $itemArr;
+        }
+        return $returnArr;
+    }
+
+    public function getSubjectByPost($post_id) {
+        $returnArr = array();
+        $subject = PostSubject::model()->findAllByAttributes(array('post_id' => $post_id));
+        foreach ($subject as $item) {
+            $subject_name = Subject::model()->findByPk($item->subject_id)->title;
+            $returnArr[] = $subject_name;
         }
         return $returnArr;
     }
