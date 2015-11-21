@@ -44,8 +44,10 @@ class User extends BaseUser {
         $check = User::model()->findByPk($attr['user_id']);
         if ($check) {
             $check->setAttributes($attr);
+            if(isset($obj_files)) {
             $avatar = UploadHelper::getUrlUploadSingleImage($obj_files, $attr['user_id']);
             $check->avatar = $avatar;
+            }
             if ($check->save(FALSE)) {
                 return 'success';
             } else {
