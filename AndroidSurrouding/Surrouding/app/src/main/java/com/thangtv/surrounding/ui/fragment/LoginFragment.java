@@ -71,6 +71,10 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
             return;
         }
 
+        /**
+         * check user...
+         */
+
         Intent intent = new Intent(getActivity(), FeedActivity.class);
         startActivity(intent);
 

@@ -14,10 +14,8 @@ import android.view.ViewGroup;
 import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.adapter.CategoryChildAdapter;
 import com.thangtv.surrounding.model.CategoryChild;
-import com.thangtv.surrounding.model.CategoryParent;
-import com.thangtv.surrounding.ui.activity.ChooseCategory;
+import com.thangtv.surrounding.ui.activity.ChooseCategoryActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,7 +47,7 @@ public class CategoriesListFragment extends android.support.v4.app.Fragment {
         Bundle args = getArguments();
         int index = args.getInt("index", 0);
 
-        categoryChildList = ((ChooseCategory) getActivity()).categoryParentList.get(index).getCategoryChildList();
+        categoryChildList = ((ChooseCategoryActivity) getActivity()).categoryParentList.get(index).getCategoryChildList();
         adapter = new CategoryChildAdapter(getActivity(), categoryChildList);
         recyclerView.setAdapter(adapter);
         return v;

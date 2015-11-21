@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.thangtv.surrounding.model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,4 +35,6 @@ public class Var {
     }
 
     public static List<Integer> selectedCategoryIDs;
+
+    public static User currentUser;
 }
