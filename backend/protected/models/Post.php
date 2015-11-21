@@ -61,7 +61,7 @@ class Post extends BasePost {
         return $returnArr;
     }
 
-    public function getPostNearBy($lat, $lng, $user_id, $limit, $offset) {
+    public function getPostNearBy($lat, $lng, $user_id, $limit, $offset, $radius) {
         $returnArr = array();
         $user_subject_sql = "SELECT subject_id FROM user_subject WHERE user_id = $user_id";
         $user_subject_arr = Yii::app()->db->createCommand($user_subject_sql)->queryAll();
@@ -71,9 +71,12 @@ class Post extends BasePost {
                 array_push($data, $item);
             }
         }
+        if (!isset($radius)) {
+            $radius = 4;
+        }
         $user_subject = '(' . implode(', ', $data) . ')';
         $sql = "SELECT p.post_id, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) as distance FROM post p JOIN location l ON p.location_id = l.location_id "
-                . "JOIN post_subject s ON p.post_id = s.post_id WHERE s.subject_id IN $user_subject GROUP BY l.location_id HAVING distance < 4 LIMIT $offset, $limit";
+                . "JOIN post_subject s ON p.post_id = s.post_id WHERE s.subject_id IN $user_subject GROUP BY l.location_id HAVING distance < $radius LIMIT $offset, $limit";
         $data = Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($data as $key => $item) {
             $itemArr = array();

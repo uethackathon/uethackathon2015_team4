@@ -27,7 +27,8 @@ class PostController extends Controller {
             $user_id = StringHelper::filterString($request->getQuery('user_id'));
             $limit = StringHelper::filterString($request->getQuery('limit'));
             $offset = StringHelper::filterString($request->getQuery('offset'));
-            $data = Post::model()->getPostNearBy($lat, $lng, $user_id, $limit, $offset);
+            $radius = StringHelper::filterString($request->getQuery('radius'));
+            $data = Post::model()->getPostNearBy($lat, $lng, $user_id, $limit, $offset, $radius);
             ResponseHelper::JsonReturnSuccess($data, 'success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
