@@ -15,6 +15,7 @@ class PostLike extends BasePostLike {
             if ($check) {
                 $post->post_like_count = intval($post->post_like_count) - 1;
                 $check->delete();
+                return array('is_liked' => 0);
             } else {
                 $model = new PostLike;
                 $model->post_id = $post_id;
@@ -22,11 +23,11 @@ class PostLike extends BasePostLike {
                 if ($model->save(FALSE)) {
                     $post->post_like_count = intval($post->post_like_count) + 1;
                     $post->save(FALSE);
-                    return TRUE;
+                    return array('is_liked' => 1);
                 }
             }
         }
-        return FALSE;
+        return 'error';
     }
 
     public function checkLike($post_id, $user_id) {

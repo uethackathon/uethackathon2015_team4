@@ -54,23 +54,53 @@ class Post extends BasePost {
 
     public function getPostNearBy($lat, $lng, $user_id, $limit, $offset) {
         $returnArr = array();
-        $criteria = new CDbCriteria;
-        $criteria->select = "t.*, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( lat ) ) ) ) as
-            distance";
-        $criteria->having = 'distance < 4';
-        $criteria->group = 't.location_id';
-        $data = Location::model()->findAll($criteria);
-        foreach ($data as $item) {
-            $itemArr = array();
-            $itemArr = $this->getPostByLocation($item->location_id, $limit, $offset);
-            foreach ($itemArr as $arr) {
-                $returnArr[] = $arr;
+        $user_subject_sql = "SELECT subject_id FROM user_subject WHERE user_id = $user_id";
+        $user_subject_arr = Yii::app()->db->createCommand($user_subject_sql)->queryAll();
+        $data = array();
+        foreach ($user_subject_arr as $key => $value) {
+            foreach ($value as $item) {
+                array_push($data, $item);
             }
         }
+        $user_subject = '(' . implode(', ', $data) . ')';
+        $sql = "SELECT p.post_id, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) as distance FROM post p JOIN location l ON p.location_id = l.location_id "
+                . "JOIN post_subject s ON p.post_id = s.post_id WHERE s.subject_id IN $user_subject GROUP BY l.location_id HAVING distance < 4 LIMIT $offset, $limit";
+        $data = Yii::app()->db->createCommand($sql)->queryAll();
+//        var_dump($data);
+//        die;
+        foreach ($data as $key => $item) {
+            $itemArr = array();
+            $itemArr = $this->getPostById($item['post_id'], $user_id);
+            $returnArr[] = $itemArr;
+        }
         return $returnArr;
+
+
+//        $returnArr = array();
+//        $subject_
+//        $arr = array();
+//        $criteria = new CDbCriteria;
+//        $criteria->select = "t.*, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( lat ) ) ) ) as
+//            distance";
+//        $criteria->having = 'distance < 4';
+//        $criteria->group = 't.location_id';
+//        $data = Location::model()->findAll($criteria);
+//        foreach ($data as $t) {
+//            $arr[$t->id] = $t->attributes;
+//        }
+//        foreach ($arr as $item) {
+//            $itemArr = array();
+//            if()
+//            $itemArr = $this->getPostByLocation($user_id, $item->location_id, $limit, $offset);
+//            foreach ($itemArr as $arr) {
+//
+//                $returnArr[] = $arr;
+//            }
+//        }
+//        return $returnArr;
     }
 
-    public function getPostById($id) {
+    public function getPostById($id, $user_id) {
         $returnArr = array();
         $item = Post::model()->findByPk($id);
         // var_dump($data); die;
@@ -80,12 +110,13 @@ class Post extends BasePost {
         $returnArr['post_id'] = $item->post_id;
         $returnArr['content'] = $item->content;
         $returnArr['date'] = $item->date;
+        $returnArr['is_like'] = PostLike::model()->checkLike($id, $user_id);
         // $returnArr[] = $itemArr;
 
         return $returnArr;
     }
 
-    public function getPostByLocation($location_id, $limit, $offset) {
+    public function getPostByLocation($user_id, $location_id, $limit, $offset) {
         $criteria = new CDbCriteria;
         $criteria->limit = $limit;
         $criteria->offset = $offset;
@@ -94,7 +125,7 @@ class Post extends BasePost {
         $returnArr = array();
         foreach ($data as $item) {
             $itemArr = array();
-            $itemArr = $this->getPostById($item->post_id);
+            $itemArr = $this->getPostById($user_id, $item->post_id);
             $returnArr[] = $itemArr;
         }
         return $returnArr;

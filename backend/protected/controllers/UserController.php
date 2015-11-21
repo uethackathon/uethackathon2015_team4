@@ -45,9 +45,8 @@ class UserController extends Controller {
         $message = User::model()->updateProfile($attr, $obj_file);
         ResponseHelper::JsonReturnSuccess('', $message);
     }
-    
-    public function actionGetUserProfile()
-    {
+
+    public function actionGetUserProfile() {
         $user_id = Yii::app()->request->getQuery('user_id');
         $data = User::model()->findByPk($user_id);
         ResponseHelper::JsonReturnSuccess($data, 'success');
