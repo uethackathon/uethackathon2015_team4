@@ -72,15 +72,16 @@ class Post extends BasePost {
 
     public function getPostById($id) {
         $returnArr = array();
-        $data = Post::model()->findByPk($id);
-        foreach ($data as $item) {
-            $returnArr['user'] = User::model()->findByPk($item->user_id);
-            $returnArr['location'] = Location::model()->findByPk($item->location_id);
-            $returnArr['post_id'] = $item->post_id;
-            $returnArr['content'] = $item->content;
-            $returnArr['date'] = $item->date;
-            // $returnArr[] = $itemArr;
-        }
+        $item = Post::model()->findByPk($id);
+        // var_dump($data); die;
+
+        $returnArr['user'] = User::model()->findByPk($item->user_id);
+        $returnArr['location'] = Location::model()->findByPk($item->location_id);
+        $returnArr['post_id'] = $item->post_id;
+        $returnArr['content'] = $item->content;
+        $returnArr['date'] = $item->date;
+        // $returnArr[] = $itemArr;
+
         return $returnArr;
     }
 
