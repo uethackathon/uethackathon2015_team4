@@ -1,21 +1,19 @@
 
-package com.thangtv.surrounding.network.model;
+package com.thangtv.surrounding.network.model.login;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class GetAllSubject {
+public class PostLogin {
 
     @SerializedName("status")
     @Expose
     private int status;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = new ArrayList<Datum>();
+    private Data data;
     @SerializedName("message")
     @Expose
     private String message;
@@ -43,7 +41,7 @@ public class GetAllSubject {
      * @return
      *     The data
      */
-    public List<Datum> getData() {
+    public Data getData() {
         return data;
     }
 
@@ -52,7 +50,7 @@ public class GetAllSubject {
      * @param data
      *     The data
      */
-    public void setData(List<Datum> data) {
+    public void setData(Data data) {
         this.data = data;
     }
 
