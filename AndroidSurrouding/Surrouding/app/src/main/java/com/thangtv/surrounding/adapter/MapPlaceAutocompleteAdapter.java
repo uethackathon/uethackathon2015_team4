@@ -54,6 +54,7 @@ import com.thangtv.surrounding.R;
  * Note that this adapter requires a valid {@link com.google.android.gms.common.api.GoogleApiClient}.
  * The API client must be maintained in the encapsulating Activity, including all lifecycle and
  * connection states. The API client must be connected with the {@link Places#GEO_DATA_API} API.
+ * comment
  */
 public class MapPlaceAutocompleteAdapter
         extends ArrayAdapter<AutocompletePrediction> implements Filterable {
