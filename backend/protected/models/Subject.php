@@ -13,8 +13,7 @@ class Subject extends BaseSubject {
         $returnArr = array();
         foreach ($data as $item) {
             $itemArr = array();
-            $subject_group_name = $this->findSubjectGroupBySubject($item->subject_id);
-            $itemArr[$subject_group_name] = array($this->findSubjectById($item->subject_id));
+            $itemArr = $this->findSubjectById($item->subject_id);
             $returnArr[] = $itemArr;
         }
         return $returnArr;
@@ -22,7 +21,18 @@ class Subject extends BaseSubject {
 
     public function findSubjectById($subject_id) {
         $subject = Subject::model()->findByPk($subject_id);
-        return $subject;
+        $returnArr = array();
+        foreach ($subject as $item) {
+            $itemArr = array();
+            $itemArr['subject_id'] = $item->subject_id;
+            $itemArr['subject_group_id'] = $item->subject_group_id;
+            $itemArr['title'] = $item->title;
+            $itemArr['description'] = $item->description;
+            $itemArr['subject_group_name'] = $this->findSubjectGroupBySubject($item->subject_id);
+            //var_dump($this->findSubjectGroupBySubject($item->subject_id)); die;
+            $returnArr[] = $itemArr;
+        }
+        return $returnArr;
     }
 
     public function findSubjectGroupById($subject_group_id) {
