@@ -52,7 +52,8 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-        Toast.makeText(FeedActivity.this, "pass" + Var.currentUser.getPassword(),Toast.LENGTH_LONG).show();
+// test get description from server
+//        Toast.makeText(FeedActivity.this, "Descriptions: " + Var.currentUser.getDescription(),Toast.LENGTH_LONG).show();
         //set up fragment manager
         fragmentManager = getSupportFragmentManager();
 

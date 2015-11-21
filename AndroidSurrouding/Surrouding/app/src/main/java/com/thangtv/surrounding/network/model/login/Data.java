@@ -4,6 +4,8 @@ package com.thangtv.surrounding.network.model.login;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 @Generated("org.jsonschema2pojo")
 public class Data {
@@ -31,10 +33,10 @@ public class Data {
     private String address;
     @SerializedName("avatar")
     @Expose
-    private Object avatar;
+    private String avatar;
     @SerializedName("cover")
     @Expose
-    private Object cover;
+    private String cover;
     @SerializedName("phone")
     @Expose
     private String phone;
@@ -43,13 +45,19 @@ public class Data {
     private String career;
     @SerializedName("location_id")
     @Expose
-    private Object locationId;
+    private String locationId;
     @SerializedName("chatting_id")
     @Expose
-    private Object chattingId;
+    private String chattingId;
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("gender")
+    @Expose
+    private String gender;
+    @SerializedName("description")
+    @Expose
+    private String description;
 
     /**
      * 
@@ -182,7 +190,7 @@ public class Data {
      * @return
      *     The avatar
      */
-    public Object getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
@@ -191,7 +199,7 @@ public class Data {
      * @param avatar
      *     The avatar
      */
-    public void setAvatar(Object avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -200,7 +208,7 @@ public class Data {
      * @return
      *     The cover
      */
-    public Object getCover() {
+    public String getCover() {
         return cover;
     }
 
@@ -209,7 +217,7 @@ public class Data {
      * @param cover
      *     The cover
      */
-    public void setCover(Object cover) {
+    public void setCover(String cover) {
         this.cover = cover;
     }
 
@@ -254,7 +262,7 @@ public class Data {
      * @return
      *     The locationId
      */
-    public Object getLocationId() {
+    public String getLocationId() {
         return locationId;
     }
 
@@ -263,7 +271,7 @@ public class Data {
      * @param locationId
      *     The location_id
      */
-    public void setLocationId(Object locationId) {
+    public void setLocationId(String locationId) {
         this.locationId = locationId;
     }
 
@@ -272,7 +280,7 @@ public class Data {
      * @return
      *     The chattingId
      */
-    public Object getChattingId() {
+    public String getChattingId() {
         return chattingId;
     }
 
@@ -281,7 +289,7 @@ public class Data {
      * @param chattingId
      *     The chatting_id
      */
-    public void setChattingId(Object chattingId) {
+    public void setChattingId(String chattingId) {
         this.chattingId = chattingId;
     }
 
@@ -301,6 +309,59 @@ public class Data {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * 
+     * @return
+     *     The gender
+     */
+    public String getGender() {
+        return gender;
+    }
+
+    /**
+     * 
+     * @param gender
+     *     The gender
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    /**
+     * 
+     * @return
+     *     The description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 
+     * @param description
+     *     The description
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(userid).append(user).append(password).append(firstName).append(lastName).append(date).append(address).append(avatar).append(cover).append(phone).append(career).append(locationId).append(chattingId).append(email).append(gender).append(description).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof Data) == false) {
+            return false;
+        }
+        Data rhs = ((Data) other);
+        return new EqualsBuilder().append(userid, rhs.userid).append(user, rhs.user).append(password, rhs.password).append(firstName, rhs.firstName).append(lastName, rhs.lastName).append(date, rhs.date).append(address, rhs.address).append(avatar, rhs.avatar).append(cover, rhs.cover).append(phone, rhs.phone).append(career, rhs.career).append(locationId, rhs.locationId).append(chattingId, rhs.chattingId).append(email, rhs.email).append(gender, rhs.gender).append(description, rhs.description).isEquals();
     }
 
 }

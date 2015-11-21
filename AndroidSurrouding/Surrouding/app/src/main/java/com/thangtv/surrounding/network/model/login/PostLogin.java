@@ -4,6 +4,8 @@ package com.thangtv.surrounding.network.model.login;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 @Generated("org.jsonschema2pojo")
 public class PostLogin {
@@ -70,6 +72,23 @@ public class PostLogin {
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(status).append(data).append(message).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof PostLogin) == false) {
+            return false;
+        }
+        PostLogin rhs = ((PostLogin) other);
+        return new EqualsBuilder().append(status, rhs.status).append(data, rhs.data).append(message, rhs.message).isEquals();
     }
 
 }

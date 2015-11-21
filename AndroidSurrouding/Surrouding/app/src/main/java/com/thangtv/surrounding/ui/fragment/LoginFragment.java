@@ -112,8 +112,8 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
                 if (user == null) return;
                 int userid = Integer.parseInt(user.getData().getUserid());
                 User user_android = new User(Integer.parseInt(user.getData().getUserid()), user.getData().getEmail(), user.getData().getPassword()
-                        , user.getData().getFirstName(), Var.timestampToCalendar(user.getData().getDate()), "Male", user.getData().getPhone(), (Bitmap) user.getData().getAvatar()
-                        , "", user.getData().getCareer()
+                        , user.getData().getFirstName() + " " + user.getData().getLastName(), Var.timestampToCalendar(user.getData().getDate()), user.getData().getGender(), user.getData().getPhone(), Var.getBitmapFromURL(user.getData().getAvatar())
+                        , user.getData().getDescription(), user.getData().getCareer()
                 );
 
 //                System.out.println("respone info:");
