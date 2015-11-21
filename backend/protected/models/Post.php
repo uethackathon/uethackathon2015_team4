@@ -68,13 +68,13 @@ class Post extends BasePost {
         $data = Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($data as $key => $item) {
             $itemArr = array();
-            $itemArr = $this->getPostById($item['post_id'], $user_id);
+            $itemArr = $this->getPostById($item['post_id'], $user_id, 1);
             $returnArr[] = $itemArr;
         }
         return $returnArr;
     }
 
-    public function getPostById($id, $user_id) {
+    public function getPostById($id, $user_id, $flag) {
         $returnArr = array();
         $item = Post::model()->findByPk($id);
         // var_dump($data); die;
@@ -84,10 +84,13 @@ class Post extends BasePost {
         $returnArr['post_id'] = $item->post_id;
         $returnArr['content'] = $item->content;
         $returnArr['date'] = $item->date;
+        $returnArr['post_comment_count'] = $item->post_comment_count;
+        $returnArr['post_like_count'] = $item->post_like_count;
         $returnArr['is_like'] = PostLike::model()->checkLike($id, $user_id);
-        $returnArr['comments'] = $this->getCommentByPost($id);
-        // $returnArr[] = $itemArr;
-
+        if ($flag != 1) {
+            $returnArr['comments'] = $this->getCommentByPost($id);
+            // $returnArr[] = $itemArr;
+        }
         return $returnArr;
     }
 
@@ -100,7 +103,7 @@ class Post extends BasePost {
         $returnArr = array();
         foreach ($data as $item) {
             $itemArr = array();
-            $itemArr = $this->getPostById($user_id, $item->post_id);
+            $itemArr = $this->getPostById($user_id, $item->post_id, 1);
             $returnArr[] = $itemArr;
         }
         return $returnArr;
@@ -115,7 +118,7 @@ class Post extends BasePost {
         $returnArr = array();
         foreach ($posts as $post) {
             $itemArr = array();
-            $itemArr = $this->getPostById($post->post_id);
+            $itemArr = $this->getPostById($user_id, $post->post_id, 1);
             $returnArr[] = $itemArr;
         }
         return $returnArr;

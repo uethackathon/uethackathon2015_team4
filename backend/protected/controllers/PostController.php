@@ -58,7 +58,7 @@ class PostController extends Controller {
         try {
             $post_id = StringHelper::filterString($request->getQuery('post_id'));
             $user_id = StringHelper::filterString($request->getQuery('user_id'));
-            $data = Post::model()->getPostById($post_id, $user_id);
+            $data = Post::model()->getPostById($post_id, $user_id, 2);
             ResponseHelper::JsonReturnSuccess($data, 'success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
@@ -124,8 +124,7 @@ class PostController extends Controller {
             var_dump($ex->getMessage());
         }
     }
-    
-   
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
