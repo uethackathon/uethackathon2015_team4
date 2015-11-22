@@ -10,6 +10,8 @@
 ## Screenshot
 https://goo.gl/q5kxj6
 
+Infomation: https://goo.gl/GXtAEp
+
 
 ## Using Technical
 ### Backend
