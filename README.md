@@ -1,7 +1,7 @@
 # _Project_
 Surrounding
-Contest UET Hackathon Open 2015
-Description: Application for connecting people surrounding
+_Contest UET Hackathon Open 2015
+_Description: Application for connecting people surrounding
 
 # Screenshot
 https://goo.gl/q5kxj6
