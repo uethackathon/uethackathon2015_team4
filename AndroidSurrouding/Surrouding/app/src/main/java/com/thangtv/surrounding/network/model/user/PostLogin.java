@@ -1,5 +1,5 @@
 
-package com.thangtv.surrounding.network.model.login;
+package com.thangtv.surrounding.network.model.user;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

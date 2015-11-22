@@ -16,7 +16,7 @@ import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.model.User;
-import com.thangtv.surrounding.network.model.login.PostLogin;
+import com.thangtv.surrounding.network.model.user.PostLogin;
 import com.thangtv.surrounding.network.service.ServiceImplements;
 import com.thangtv.surrounding.ui.activity.FeedActivity;
 
