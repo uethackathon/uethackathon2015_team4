@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.thangtv.surrounding.adapter.ViewPagerAdapter;
 import com.thangtv.surrounding.adapter.ViewPagerAdapterIconOnly;
+import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.controller.PlaceData;
 import com.thangtv.surrounding.ui.fragment.FeedFragment;
@@ -31,9 +33,13 @@ import com.thangtv.surrounding.ui.fragment.MapFragment;
 import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.ui.helper.ViewHelper;
 
+import org.w3c.dom.Text;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class FeedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         TabLayout.OnTabSelectedListener,
-        View.OnClickListener{
+        View.OnClickListener {
 
     private android.support.v7.widget.Toolbar toolbar;
     private TabLayout tabLayout;
@@ -43,18 +49,28 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private FloatingActionButton fab;
+    private CircleImageView avatar;
+    private TextView name;
+    private TextView email;
 
     private int fabType;
 
     public static android.support.v4.app.FragmentManager fragmentManager;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        avatar.setImageBitmap(Var.currentUser.getAvatar());
+        name.setText(Var.currentUser.getName());
+        email.setText(Var.currentUser.getEmail());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-// test get description from server
-//        Toast.makeText(FeedActivity.this, "Descriptions: " + Var.currentUser.getDescription(),Toast.LENGTH_LONG).show();
-        //set up fragment manager
+
         fragmentManager = getSupportFragmentManager();
 
         //set up viewpager and tab layout
@@ -104,12 +120,11 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
         fabType = 0;
         fab.setOnClickListener(this);
 
-
         //add navigation header
         View header = navigationView.inflateHeaderView(R.layout.nav_header);
-
-        //put radius
-        mapFragment.radius = 2000;
+        avatar = (CircleImageView) header.findViewById(R.id.nav_avatar);
+        name = (TextView) header.findViewById(R.id.nav_user_name);
+        email = (TextView) header.findViewById(R.id.nav_user_email);
     }
 
     @Override
@@ -124,14 +139,14 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
                         //add marker to my location
                         if (myLocation != null) {
                             LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                            mapFragment.myLocationName = PlaceData.getAddressFromLocation(myLocation,this);
+                            mapFragment.myLocationName = PlaceData.getAddressFromLocation(myLocation, this);
                             mapFragment.myLocationLat = myLocation.getLatitude();
                             mapFragment.myLocationLng = myLocation.getLongitude();
                             if (mapFragment.myLocationMarker != null) {
                                 mapFragment.myLocationMarker.remove();
                             }
 
-                            if (mapFragment.myLocationMarker!= null) {
+                            if (mapFragment.myLocationMarker != null) {
                                 mapFragment.myLocationMarker.remove();
                             }
                             mapFragment.myLocationMarker = mapFragment.googleMap.addMarker(new MarkerOptions()
@@ -146,7 +161,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
                         mapFragment.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mapFragment.myLocationLat, mapFragment.myLocationLng), 14));
 
                         //draw circle
-                        if (mapFragment.circle!= null) {
+                        if (mapFragment.circle != null) {
                             mapFragment.circle.remove();
                         }
                         mapFragment.circle = ViewHelper.drawCirle(this, mapFragment.googleMap, new LatLng(mapFragment.myLocationLat, mapFragment.myLocationLng), mapFragment.radius);
@@ -175,6 +190,9 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
             case R.id.settings:
                 return true;
             case R.id.log_out:
+                Var.currentUser = null;
+                Var.clearUser(this);
+                finish();
                 return true;
 
         }
@@ -186,7 +204,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setCurrentItem(tab.getPosition());
         ViewHelper.animateFab(this, fab, tab.getPosition());
         fabType = tab.getPosition();
-        if(tab.getPosition()==0) {
+        if (tab.getPosition() == 0) {
             tab.setIcon(getResources().getDrawable(R.drawable.ic_map_white_highlight_24dp));
         } else {
             tab.setIcon(getResources().getDrawable(R.drawable.ic_access_time_white_highlight_24dp));
@@ -196,7 +214,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-        if(tab.getPosition()==0) {
+        if (tab.getPosition() == 0) {
             tab.setIcon(getResources().getDrawable(R.drawable.ic_map_white_24dp));
         } else {
             tab.setIcon(getResources().getDrawable(R.drawable.ic_access_time_white_24dp));

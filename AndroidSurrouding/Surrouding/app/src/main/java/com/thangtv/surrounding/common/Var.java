@@ -25,6 +25,8 @@ import java.util.List;
 
 
 public class Var {
+    //radius for finding neary posts
+    public static int radius = 4;
 
     //show Toast
     public static void showToast(Context context, String sms) {
@@ -40,7 +42,7 @@ public class Var {
         editor.apply();
     }
 
-    public static void saveObject(Context context, String key, Object object) {
+    public static void saveUser(Context context, String key, User object) {
         SharedPreferences.Editor editor = PreferenceManager
                 .getDefaultSharedPreferences(context.getApplicationContext())
                 .edit();
@@ -57,13 +59,20 @@ public class Var {
         return settings.getString(key, null);
     }
 
-    public static Object getObject(Context context, String key) {
+    public static User getUser(Context context, String key) {
         SharedPreferences settings = PreferenceManager
                 .getDefaultSharedPreferences(context.getApplicationContext());
         Gson gson = new Gson();
         String json = settings.getString(key, "");
-        Object obj = gson.fromJson(json, Object.class);
+        User obj = (User) gson.fromJson(json, User.class);
         return obj;
+    }
+
+    public static void clearUser(Context context) {
+        SharedPreferences.Editor editor = PreferenceManager
+                .getDefaultSharedPreferences(context.getApplicationContext())
+                .edit();
+        editor.remove(Const.KEY_USER);
     }
 
     public static List<Integer> selectedCategoryIDs;

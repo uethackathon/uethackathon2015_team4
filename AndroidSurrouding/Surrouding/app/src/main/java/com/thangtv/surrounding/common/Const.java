@@ -58,4 +58,6 @@ public class Const {
     public static final String KEY_USER = "user";
     public static final String KEY_CAREER = "career";
 
+    public static final String URI_API = "http://project.huynguyenis.me";
+
 }

@@ -16,7 +16,7 @@ import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.model.User;
-import com.thangtv.surrounding.network.model.login.PostLogin;
+import com.thangtv.surrounding.network.model.user.PostLogin;
 import com.thangtv.surrounding.network.service.ServiceImplements;
 import com.thangtv.surrounding.ui.activity.FeedActivity;
 
@@ -125,7 +125,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
 
 
                 // add user
-                Var.saveObject(getContext(), Const.KEY_USER, user_android);
+                Var.saveUser(getContext(), Const.KEY_USER, user_android);
                 Var.currentUser = user_android;
                 Var.showToast(getContext(), "Login success!");
                 Intent intent = new Intent(getActivity(), FeedActivity.class);

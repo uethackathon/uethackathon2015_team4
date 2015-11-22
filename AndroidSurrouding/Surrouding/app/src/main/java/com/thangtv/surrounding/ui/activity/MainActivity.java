@@ -16,15 +16,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(Var.getObject(this, Const.KEY_USER_ID)!=null) {
+        if(Var.getUser(this, Const.KEY_USER)!=null) {
             //send user to MapViewActivity
-            Var.currentUser = (User) Var.getObject(this, Const.KEY_USER_ID);
+            Var.currentUser = Var.getUser(this, Const.KEY_USER);
             Intent intent = new Intent (MainActivity.this, FeedActivity.class);
             startActivity(intent);
+            finish();
         } else {
             //send user to LoginSignupActivity
             Intent intent1 = new Intent (MainActivity.this, LoginSignupActivity.class);
             startActivity(intent1);
+            finish();
         }
 
 

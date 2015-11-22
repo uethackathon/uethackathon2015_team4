@@ -120,8 +120,13 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
                     String description = data.getStringExtra(Const.KEY_DESCRIPTION);
 
                     String filePath = data.getStringExtra("pathAvatar");
-//                    RequestBody requestBodyAvatar = getRequestBody(filePath);
-                    Log.d("filePath",filePath);
+                    RequestBody requestBodyAvatar = null;
+                    if (filePath!=null && filePath.length()>0)
+                        requestBodyAvatar = getRequestBody(filePath);
+                    Log.d("filePath", filePath);
+
+//                    UserNetwork user = new UserNetwork();
+
 
                     Call<PostRegister> call = service.postLogin(email,pass, fullname, date,phone, career, gender, description);
                     call.enqueue(new Callback<PostRegister>() {
