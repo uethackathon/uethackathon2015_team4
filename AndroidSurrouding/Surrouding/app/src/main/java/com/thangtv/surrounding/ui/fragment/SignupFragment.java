@@ -128,7 +128,7 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
 //                    UserNetwork user = new UserNetwork();
 
 
-                    Call<PostRegister> call = service.postLogin(requestBodyAvatar,email,pass, fullname, date,phone, career, gender, description);
+                    Call<PostRegister> call = service.postLogin(email,pass, fullname, date,phone, career, gender, description);
                     call.enqueue(new Callback<PostRegister>() {
                         @Override
                         public void onResponse(Response<PostRegister> response, Retrofit retrofit) {

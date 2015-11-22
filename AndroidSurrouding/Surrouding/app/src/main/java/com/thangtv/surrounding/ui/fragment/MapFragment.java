@@ -19,8 +19,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.thangtv.surrounding.R;
+import com.thangtv.surrounding.apis.IGetNearByPosts;
+import com.thangtv.surrounding.common.Const;
+import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.controller.PlaceData;
+import com.thangtv.surrounding.network.model.postNearBy.Post;
+import com.thangtv.surrounding.network.model.postNearBy.PostContainer;
 import com.thangtv.surrounding.ui.helper.ViewHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +52,8 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
     public Circle circle;
     public double radius;
 
+    public List<Marker> nearbyPostMarkers;
+
     public MapFragment() {
         // Required empty public constructor
     }
@@ -50,6 +66,8 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         //Set up map fragment
+
+        nearbyPostMarkers = new ArrayList<>();
 
         SupportMapFragment supportMapFragment = ((SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map));
@@ -89,5 +107,46 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
             circle.remove();
         }
         circle = ViewHelper.drawCirle(getContext(), googleMap, new LatLng(myLocationLat, myLocationLng), radius);
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Const.URI_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IGetNearByPosts service = retrofit.create(IGetNearByPosts.class);
+
+        Call<PostContainer> call = service.getPostNearby("21.0031", "105.82", "1", "0", "3", Integer.toString(Var.radius));
+
+        call.enqueue(new Callback<PostContainer>() {
+                         @Override
+                         public void onResponse(Response<PostContainer> response, Retrofit retrofit) {
+
+                             List<Post> posts = response.body().getData();
+
+                             for (int i = 0; i < posts.size(); i++) {
+                                 double lat = Double.parseDouble(posts.get(i).getLocation().getLatitude());
+                                 double lng = Double.parseDouble(posts.get(i).getLocation().getLongitude());
+                                 Marker marker = googleMap.addMarker(new MarkerOptions()
+                                         .position(new LatLng(lat, lng))
+                                         .title(posts.get(i).getUser().getUsername())
+                                         .snippet(posts.get(i).getContent()));
+                                 nearbyPostMarkers.add(marker);
+
+
+                             }
+
+
+                         }
+
+
+                         @Override
+                         public void onFailure(Throwable t) {
+
+                         }
+                     }
+
+        );
+
+
     }
 }
