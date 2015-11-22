@@ -20,6 +20,7 @@ import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.model.CategoryChild;
 import com.thangtv.surrounding.model.CategoryParent;
+import com.thangtv.surrounding.network.model.subject.Data;
 import com.thangtv.surrounding.ui.fragment.CategoriesListFragment;
 
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CategoryChildAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<CategoryChild> list;
+    private List<Data> list;
     private Context context;
     private int currentPosition;
 
-    public CategoryChildAdapter(Context context, List<CategoryChild> list) {
+    public CategoryChildAdapter(Context context, List<Data> list) {
         this.list = list;
         this.context = context;
     }
@@ -55,7 +56,7 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<RecyclerView.View
             Var.selectedCategoryIDs = new ArrayList<>();
         }
         for (int i = 0; i < Var.selectedCategoryIDs.size(); i++) {
-            if (Var.selectedCategoryIDs.get(i) == (list.get(position).getId())) {
+            if (Var.selectedCategoryIDs.get(i).equals(list.get(position).getSubjectId())) {
                 holder.checkBox.setChecked(true);
             } else {
                 holder.checkBox.setChecked(false);
@@ -69,11 +70,6 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<RecyclerView.View
         return list.size();
     }
 
-    public void swapData(List<CategoryChild> list) {
-        this.list.clear();
-        this.list.addAll(list);
-        notifyDataSetChanged();
-    }
 
     public class CategoryChildViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
@@ -89,10 +85,10 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        Var.selectedCategoryIDs.add(list.get(currentPosition).getId());
+                        Var.selectedCategoryIDs.add(list.get(currentPosition).getSubjectId());
                     } else {
                         for (int i = 0; i < Var.selectedCategoryIDs.size(); i++) {
-                            if (Var.selectedCategoryIDs.get(i) == list.get(currentPosition).getId()) {
+                            if (Var.selectedCategoryIDs.get(i) == list.get(currentPosition).getSubjectId()) {
                                 Var.selectedCategoryIDs.remove(i);
                             }
                         }

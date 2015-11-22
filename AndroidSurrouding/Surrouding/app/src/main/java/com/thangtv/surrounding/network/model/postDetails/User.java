@@ -20,7 +20,7 @@ public class User {
     private String avatar;
 
     /**
-     * 
+     *
      * @return
      *     The username
      */
@@ -29,7 +29,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param username
      *     The username
      */
@@ -38,7 +38,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @return
      *     The userId
      */
@@ -47,7 +47,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param userId
      *     The user_id
      */
@@ -56,7 +56,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @return
      *     The avatar
      */
@@ -65,7 +65,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param avatar
      *     The avatar
      */

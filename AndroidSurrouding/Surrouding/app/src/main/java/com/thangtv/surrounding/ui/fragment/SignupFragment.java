@@ -20,7 +20,9 @@ import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.model.User;
 import com.thangtv.surrounding.network.model.register.PostRegister;
+import com.thangtv.surrounding.network.model.upload.Image;
 import com.thangtv.surrounding.network.service.ServiceImplements;
+import com.thangtv.surrounding.network.service.ServiceUploadImage;
 import com.thangtv.surrounding.ui.activity.EditProfileActivity;
 
 import java.io.File;
@@ -96,6 +98,17 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
         startActivityForResult(intent, Const.RC_EDIT_PROFILE);
     }
 
+    private static Call<PostRegister> callStatic;
+    private static String emailStatic;
+    private static String passStatic;
+    private static String dateStatic;
+    private static String fullnameStatic;
+    private static String phoneStatic;
+    private static String careerStatic;
+    private static String genderStatic;
+    private static String descriptionStatic;
+    private static ServiceImplements serviceStatic;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -108,28 +121,77 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
                             .baseUrl(API_URL)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
-                    ServiceImplements service = retrofit.create(ServiceImplements.class);
+                    serviceStatic = retrofit.create(ServiceImplements.class);
 
-                    String email = editEmail.getText().toString();
-                    String pass = editPass.getText().toString();
-                    String date = Var.calendarToTimestamp(data.getStringExtra(Const.KEY_DOB));
-                    String fullname = data.getStringExtra(Const.KEY_NAME);
-                    String phone = data.getStringExtra(Const.KEY_PHONE_NUMBER);
-                    String career = data.getStringExtra(Const.KEY_CAREER);
-                    String gender = data.getStringExtra(Const.KEY_GENDER);
-                    String description = data.getStringExtra(Const.KEY_DESCRIPTION);
+                    emailStatic = editEmail.getText().toString();
+                    passStatic = editPass.getText().toString();
+                    dateStatic = Var.calendarToTimestamp(data.getStringExtra(Const.KEY_DOB));
+                    fullnameStatic = data.getStringExtra(Const.KEY_NAME);
+                    phoneStatic = data.getStringExtra(Const.KEY_PHONE_NUMBER);
+                    careerStatic = data.getStringExtra(Const.KEY_CAREER);
+                    genderStatic = data.getStringExtra(Const.KEY_GENDER);
+                    descriptionStatic = data.getStringExtra(Const.KEY_DESCRIPTION);
 
                     String filePath = data.getStringExtra("pathAvatar");
-                    RequestBody requestBodyAvatar = null;
-                    if (filePath!=null && filePath.length()>0)
-                        requestBodyAvatar = getRequestBody(filePath);
-                    Log.d("filePath", filePath);
+
+                    if (filePath!=null && filePath.length()>0) {
+                        uploadImage(filePath);
+                    }else{
+                        callStatic = serviceStatic.postSignIn(emailStatic, passStatic, fullnameStatic, dateStatic, phoneStatic,
+                                careerStatic, genderStatic, descriptionStatic,"");
+                        callStatic.enqueue(new Callback<PostRegister>() {
+                            @Override
+                            public void onResponse(Response<PostRegister> response, Retrofit retrofit) {
+                                PostRegister postRegister = response.body();
+                                Log.d("Tan test register2",postRegister.getStatus()+"");
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                Log.d("Tan test register2",t.toString()+"");
+                            }
+                        });
+                    }
 
 //                    UserNetwork user = new UserNetwork();
 
 
-                    Call<PostRegister> call = service.postLogin(email,pass, fullname, date,phone, career, gender, description);
-                    call.enqueue(new Callback<PostRegister>() {
+//                    callStatic = service.postSignIn(email, pass, fullname, date, phone, career, gender, description);
+//                    callStatic.enqueue(new Callback<PostRegister>() {
+//                        @Override
+//                        public void onResponse(Response<PostRegister> response, Retrofit retrofit) {
+//                            PostRegister postRegister = response.body();
+//                            Log.d("Tan test register",postRegister.getStatus()+"");
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Throwable t) {
+//                            Log.d("Tan test register",t.toString()+"");
+//                        }
+//                    });
+                }
+
+        }
+    }
+    private void uploadImage(String filePath) {
+        try {
+            ServiceImplements service =
+                    ServiceUploadImage.createService(ServiceImplements.class);
+
+            File file = new File(filePath);
+
+            final RequestBody requestBody =
+                    RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+            Call<Image> call = service.uploadImage(requestBody);
+            call.enqueue(new Callback<Image>() {
+                @Override
+                public void onResponse(Response<Image> response, Retrofit retrofit) {
+                    String urlAvatar = response.body().getData();
+                    Log.d("upload", urlAvatar + "");
+                    callStatic = serviceStatic.postSignIn(emailStatic, passStatic, fullnameStatic, dateStatic, phoneStatic,
+                            careerStatic, genderStatic, descriptionStatic,urlAvatar);
+                    callStatic.enqueue(new Callback<PostRegister>() {
                         @Override
                         public void onResponse(Response<PostRegister> response, Retrofit retrofit) {
                             PostRegister postRegister = response.body();
@@ -138,20 +200,19 @@ public class SignupFragment extends android.support.v4.app.Fragment implements V
 
                         @Override
                         public void onFailure(Throwable t) {
-                            Log.d("Tan test register",t.toString()+"");
+                            Log.d("failSignIn","");
                         }
                     });
                 }
 
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.d("failupload","fail");
+                }
+            });
+
+        } catch (Exception e) {
+            Log.d("fail exception","fail");
         }
-    }
-    private RequestBody getRequestBody(String filePath){
-
-//        String description = "upload image to server";
-        File file = new File(filePath);
-
-        RequestBody requestBody =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        return requestBody;
     }
 }

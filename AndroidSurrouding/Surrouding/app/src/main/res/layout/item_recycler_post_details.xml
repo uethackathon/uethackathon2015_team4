@@ -62,11 +62,12 @@
 
 
                     <TextView
-                        android:id="@+id/description"
+                        android:id="@+id/content"
                         style="@style/Base.TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+
                         android:text="Mình đang là sinh viên chưa có xe nên cần rất cực kì là nhiều xe đưa đón tận nơi miễn phí"
                         android:textColor="@color/color_primary_text" />
 
@@ -83,7 +84,7 @@
                 android:weightSum="1">
 
                 <Button
-                    android:id="@+id/button_report"
+                    android:id="@+id/button_like"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="84dp"
                     android:layout_height="wrap_content"
@@ -98,7 +99,7 @@
             <include layout="@layout/divider2" />
 
             <TextView
-                android:id="@+id/inviters_or_followers"
+                android:id="@+id/likes_and_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"

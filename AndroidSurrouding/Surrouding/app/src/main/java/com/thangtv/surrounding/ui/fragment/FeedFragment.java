@@ -1,6 +1,7 @@
 package com.thangtv.surrounding.ui.fragment;
 
 
+import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.thangtv.surrounding.adapter.PostNearByAdapter;
 import com.thangtv.surrounding.apis.IGetNearByPosts;
 import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
+import com.thangtv.surrounding.controller.PlaceData;
 import com.thangtv.surrounding.network.model.postNearBy.PostContainer;
 
 import retrofit.Call;
@@ -45,13 +47,16 @@ public class FeedFragment extends android.support.v4.app.Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.post_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        Location myLocation = PlaceData.getGpsData(getActivity());
+        String lat = Double.toString(myLocation.getLatitude());
+        String lng = Double.toString(myLocation.getLongitude());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Const.URI_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         IGetNearByPosts service = retrofit.create(IGetNearByPosts.class);
 
-        Call<PostContainer> call = service.getPostNearby("21.0031", "105.82", "1", "0", "3", Integer.toString(Var.radius));
+        Call<PostContainer> call = service.getPostNearby(lat,lng, Integer.toString(Var.currentUser.getId()), "0", "10", Integer.toString(Var.radius));
 
         call.enqueue(new Callback<PostContainer>() {
                          @Override

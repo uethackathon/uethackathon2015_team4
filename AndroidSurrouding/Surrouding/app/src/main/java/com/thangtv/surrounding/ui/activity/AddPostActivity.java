@@ -62,6 +62,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
 
         switch (requestCode) {
             case Const.RC_CHOOSE_LOCATION:
+                editLocation.setText(data.getStringExtra("locationName"));
                 break;
             case Const.RC_CHOOSE_CATEFORY:
                 break;

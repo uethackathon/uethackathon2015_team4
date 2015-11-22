@@ -75,7 +75,7 @@ public class Var {
         editor.remove(Const.KEY_USER);
     }
 
-    public static List<Integer> selectedCategoryIDs;
+    public static List<String> selectedCategoryIDs;
 
     public static User currentUser;
 

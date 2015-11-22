@@ -1,20 +1,19 @@
+package com.thangtv.surrounding.network.model.upload;
 
-package com.thangtv.surrounding.network.model.postDetails;
-
+//import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
-public class PostDetailsContainer {
+/**
+ * Created by Ngo Van Tan on 11/20/2015.
+ */
+public class Image {
 
     @SerializedName("status")
     @Expose
     private int status;
     @SerializedName("data")
     @Expose
-    private Post data;
+    private String data;
     @SerializedName("message")
     @Expose
     private String message;
@@ -22,7 +21,7 @@ public class PostDetailsContainer {
     /**
      *
      * @return
-     *     The status
+     * The status
      */
     public int getStatus() {
         return status;
@@ -31,7 +30,7 @@ public class PostDetailsContainer {
     /**
      *
      * @param status
-     *     The status
+     * The status
      */
     public void setStatus(int status) {
         this.status = status;
@@ -40,25 +39,25 @@ public class PostDetailsContainer {
     /**
      *
      * @return
-     *     The data
+     * The data
      */
-    public Post getPost() {
+    public String getData() {
         return data;
     }
 
     /**
      *
      * @param data
-     *     The data
+     * The data
      */
-    public void setPost(Post data) {
+    public void setData(String data) {
         this.data = data;
     }
 
     /**
      *
      * @return
-     *     The message
+     * The message
      */
     public String getMessage() {
         return message;
@@ -67,7 +66,7 @@ public class PostDetailsContainer {
     /**
      *
      * @param message
-     *     The message
+     * The message
      */
     public void setMessage(String message) {
         this.message = message;

@@ -1,8 +1,8 @@
 package com.thangtv.surrounding.apis;
 
 import com.squareup.okhttp.RequestBody;
-import com.thangtv.surrounding.network.model.register.PostRegister;
 import com.thangtv.surrounding.network.model.user.PostLogin;
+import com.thangtv.surrounding.network.model.register.PostRegister;
 
 import retrofit.Call;
 import retrofit.http.Field;

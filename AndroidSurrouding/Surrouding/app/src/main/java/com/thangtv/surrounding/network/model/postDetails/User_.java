@@ -20,7 +20,7 @@ public class User_ {
     private String avatar;
 
     /**
-     * 
+     *
      * @return
      *     The username
      */
@@ -29,7 +29,7 @@ public class User_ {
     }
 
     /**
-     * 
+     *
      * @param username
      *     The username
      */
@@ -38,7 +38,7 @@ public class User_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The userId
      */
@@ -47,7 +47,7 @@ public class User_ {
     }
 
     /**
-     * 
+     *
      * @param userId
      *     The user_id
      */
@@ -56,7 +56,7 @@ public class User_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The avatar
      */
@@ -65,12 +65,11 @@ public class User_ {
     }
 
     /**
-     * 
+     *
      * @param avatar
      *     The avatar
      */
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
 }

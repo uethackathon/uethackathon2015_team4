@@ -21,10 +21,18 @@ class User extends BaseUser {
             if ($model->save(FALSE)) {
                 $image_url = NULL;
                 if (isset($image)) {
-                    $image_url = UploadHelper::getUrlUploadSingleImage($image, $model->userid);
+                    $image_url = $image;
                 }
                 $model->avatar = $image_url;
                 $model->save(FALSE);
+                $subjects = Subject::model()->findAll();
+                foreach($subjects as $subject)
+                {
+                    $user_subject = new UserSubject;
+                    $user_subject->subject_id = $subject->subject_id;
+                    $user_subject->user_id = $model->userid;
+                    $user_subject->save(FALSE);
+                }
                 return 'SUCCESS';
             }
             return 'SERVER_ERROR';
