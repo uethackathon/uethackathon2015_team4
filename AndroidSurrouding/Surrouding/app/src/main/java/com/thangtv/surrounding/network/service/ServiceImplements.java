@@ -1,5 +1,7 @@
 package com.thangtv.surrounding.network.service;
 
+import com.squareup.okhttp.RequestBody;
+import com.thangtv.surrounding.network.model.upload.Image;
 import com.thangtv.surrounding.network.model.user.GetUserProfile;
 import com.thangtv.surrounding.network.model.user.PostLogin;
 import com.thangtv.surrounding.network.model.register.PostRegister;
@@ -9,7 +11,10 @@ import retrofit.Call;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -22,10 +27,11 @@ public interface ServiceImplements {
 
     @FormUrlEncoded
     @POST("/hackathon/user/register")
-    Call<PostRegister> postLogin(@Field("email") String email, @Field("password") String password
+    Call<PostRegister> postSignIn(@Field("email") String email, @Field("password") String password
             ,@Field("first_name") String first_name,@Field("date")String date
             ,@Field("phone")String phone,@Field("career") String career
-            ,@Field("gender")String gender,@Field("description") String description);
+            ,@Field("gender")String gender,@Field("description") String description
+            ,@Field("image") String avatarurl);
 
 
     @FormUrlEncoded
@@ -44,4 +50,11 @@ public interface ServiceImplements {
 
     @GET("hackathon/user/getuserprofile")
     Call<GetUserProfile> getUserProfile(@Query("user_id") String user_id);
+
+    @Multipart
+    @POST("/hackathon/post/UploadImage")
+    Call<Image> uploadImage(
+            @Part("image\"; filename=\"image.jpg\" \"") RequestBody file);
+
+
 }
