@@ -11,6 +11,6 @@ import retrofit.http.Query;
  * Created by uendno on 22/11/2015.
  */
 public interface IGetPostDetails {
-    @GET("http://project.huynguyenis.me/hackathon/post/getpost")
+    @GET("/hackathon/post/getpost")
     Call<PostDetailsContainer> getPostByID(@Query("post_id") String postID, @Query("user_id") String userID);
 }
