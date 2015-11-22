@@ -1,10 +1,15 @@
 # Project
 * Contest UET Hackathon Open 2015
-* Surrounding
+
+** Surrounding **
+
+![Image of Yaktocat](http://i.imgur.com/oM2yRFy.png)
+
 * Description: Application for connecting people surrounding
 
 ## Screenshot
 https://goo.gl/q5kxj6
+
 
 ## Using Technical
 ### Backend
