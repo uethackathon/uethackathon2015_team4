@@ -125,7 +125,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
 
 
                 // add user
-                Var.saveObject(getContext(), Const.KEY_USER, user_android);
+                Var.saveUser(getContext(), Const.KEY_USER, user_android);
                 Var.currentUser = user_android;
                 Var.showToast(getContext(), "Login success!");
                 Intent intent = new Intent(getActivity(), FeedActivity.class);
