@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.network.model.postNearBy.Post;
 import com.thangtv.surrounding.network.model.postNearBy.PostContainer;
+import com.thangtv.surrounding.ui.activity.PostDetailsActivity;
 import com.thangtv.surrounding.ui.helper.ImageLoadTask;
 
 import java.util.List;
@@ -82,15 +83,16 @@ public class PostNearByAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             likesAndComments = (TextView) parent.findViewById(R.id.likes_and_comments);
 
             buttonLike.setOnClickListener(this);
+            content.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.content:
-                    /*Intent intent = new Intent(context, PostDetailsActivity.class);
+                    Intent intent = new Intent(context, PostDetailsActivity.class);
                     intent.putExtra("postID", posts.get(currentPosition).getPostId());
-                    context.startActivity(intent);*/
+                    context.startActivity(intent);
                     break;
                 case R.id.button_like:
 
