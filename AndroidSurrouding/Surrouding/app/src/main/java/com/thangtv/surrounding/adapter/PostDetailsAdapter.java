@@ -14,8 +14,10 @@ import android.widget.Toast;
 import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.apis.IGetNearByPosts;
 import com.thangtv.surrounding.apis.IGetPostDetails;
+import com.thangtv.surrounding.apis.ILike;
 import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
+import com.thangtv.surrounding.network.model.like.LikeContainer;
 import com.thangtv.surrounding.network.model.postDetails.Comment;
 import com.thangtv.surrounding.network.model.postDetails.PostDetailsContainer;
 import com.thangtv.surrounding.network.model.postNearBy.PostContainer;
@@ -151,6 +153,7 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             avatar.setOnClickListener(this);
             userName.setOnClickListener(this);
+            likeButton.setOnClickListener(this);
         }
 
         @Override
@@ -162,6 +165,7 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     break;
                 case R.id.button_like:
+                    like();
                     if (likeButton.getText().toString().equals("LIKE")) {
                         likeButton.setText("LIKED");
                         likeButton.setTextColor(context.getResources().getColor(R.color.color_disabled_text));
@@ -238,7 +242,7 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                                          PostRegister postRegister = response.body();
 
-                                         if(postRegister.getStatus()==1) {
+                                         if (postRegister.getStatus() == 1) {
 
                                              Retrofit retrofit1 = new Retrofit.Builder()
                                                      .baseUrl(Const.URI_API)
@@ -246,7 +250,7 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                                      .build();
                                              IGetPostDetails service = retrofit1.create(IGetPostDetails.class);
 
-                                             Call<PostDetailsContainer> call = service.getPostByID(postDetailsContainer.getPost().getPostId(), ""+Var.currentUser.getId());
+                                             Call<PostDetailsContainer> call = service.getPostByID(postDetailsContainer.getPost().getPostId(), "" + Var.currentUser.getId());
 
 
                                              call.enqueue(new Callback<PostDetailsContainer>() {
@@ -284,5 +288,37 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     break;
             }
         }
+    }
+
+
+    public void like() {
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(Const.URI_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ILike service = retrofit1.create(ILike.class);
+
+        Call<LikeContainer> call = service.postLike(Var.currentUser.getId()+" ", postDetailsContainer.getPost().getPostId());
+
+
+        call.enqueue(new Callback<LikeContainer>() {
+            @Override
+            public void onResponse(Response<LikeContainer> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
+                    LikeContainer result = response.body();
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
     }
 }

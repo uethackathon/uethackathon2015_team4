@@ -1,5 +1,6 @@
 package com.thangtv.surrounding.ui.activity;
 
+import android.content.Intent;
 import android.location.Location;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -145,6 +146,15 @@ public class ChooseLocationActivity extends AppCompatActivity implements OnMapRe
         }
 
 
+    }
+
+    public void done (View v) {
+        Intent intent = new Intent();
+        intent.putExtra("locationName", locationName);
+        intent.putExtra("locationLat",locationLat);
+        intent.putExtra("locationLng", myLocationLng);
+        setResult(Const.RC_CHOOSE_LOCATION, intent);
+        finish();
     }
 
     private void setupAutoComplete() {

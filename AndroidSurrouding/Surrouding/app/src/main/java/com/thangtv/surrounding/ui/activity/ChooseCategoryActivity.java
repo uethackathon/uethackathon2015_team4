@@ -45,7 +45,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        //feed data
+        //fake data
         categoryParentList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             CategoryParent categoryParent = new CategoryParent();
@@ -55,6 +55,8 @@ public class ChooseCategoryActivity extends AppCompatActivity {
             }
             categoryParentList.add(categoryParent);
         }
+
+
 
         //set up viewpager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
