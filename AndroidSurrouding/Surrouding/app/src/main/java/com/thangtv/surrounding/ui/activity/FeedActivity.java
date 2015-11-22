@@ -182,6 +182,9 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.profile:
+                Intent intent = new Intent(FeedActivity.this, ProfileActivity.class);
+                intent.putExtra("userID", Var.currentUser.getId());
+                startActivity(intent);
                 return true;
             case R.id.notifications:
                 return true;

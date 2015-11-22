@@ -15,8 +15,16 @@ import com.thangtv.surrounding.R;
 import com.thangtv.surrounding.common.Const;
 import com.thangtv.surrounding.common.Var;
 import com.thangtv.surrounding.model.User;
+import com.thangtv.surrounding.network.model.user.GetUserProfile;
+import com.thangtv.surrounding.network.service.ServiceImplements;
 
 import java.util.Calendar;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -47,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         phone.setText(user.getPhoneNumber());
         email.setText(user.getEmail());
         description.setText(user.getDescription());
+        getSupportActionBar().setTitle(user.getName());
     }
 
     @Override
@@ -95,6 +104,40 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
 
             //get user from database
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Const.URI_API)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            ServiceImplements service = retrofit.create(ServiceImplements.class);
+            Call<GetUserProfile> call = service.getUserProfile(intent.getIntArrayExtra("userID")+"");
+            call.enqueue(new Callback<GetUserProfile>() {
+                @Override
+                public void onResponse(Response<GetUserProfile> response, Retrofit retrofit) {
+                    if (!response.isSuccess()) {
+                        try {
+                            Var.showToast(ProfileActivity.this, response.errorBody().string());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    GetUserProfile result =response.body();
+                    User user_android = new User(Integer.parseInt(result.getData().getUserid()), result.getData().getEmail(), result.getData().getPassword()
+                            , result.getData().getFirstName() + " " + result.getData().getLastName(), Var.timestampToCalendar(result.getData().getDate()), result.getData().getGender(), result.getData().getPhone(), Var.getBitmapFromURL(result.getData().getAvatar())
+                            , result.getData().getDescription(), result.getData().getCareer()
+                    );
+
+                    user=user_android;
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+
+
 
             fab.setImageResource(R.drawable.ic_add_white_36dp);
             fab.setOnClickListener(new View.OnClickListener() {
