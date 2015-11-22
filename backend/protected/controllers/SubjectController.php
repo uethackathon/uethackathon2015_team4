@@ -18,7 +18,7 @@ class SubjectController extends Controller {
     public function actionGetSubjectByUser() {
         $request = Yii::app()->request;
         try {
-            $user_id = StringHelper::filterString($request->getPost('user_id'));
+            $user_id = StringHelper::filterString($request->getQuery('user_id'));
             $data = Subject::model()->getSubjectByUser($user_id);
             ResponseHelper::JsonReturnSuccess($data, 'success');
         } catch (Exception $ex) {

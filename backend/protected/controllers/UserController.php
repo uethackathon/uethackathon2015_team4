@@ -13,9 +13,10 @@ class UserController extends Controller {
     public function actionRegister() {
         $attr = StringHelper::filterArrayString($_POST);
         $image = NULL;
-        if(isset($_FILES['image']))
-        {
+        if (isset($_FILES['image'])) {
             $image = $_FILES['image'];
+        } else if (isset($attr['image'])) {
+            $image = $attr['image'];
         }
         $result = User::model()->register($attr, $image);
         switch ($result) {
