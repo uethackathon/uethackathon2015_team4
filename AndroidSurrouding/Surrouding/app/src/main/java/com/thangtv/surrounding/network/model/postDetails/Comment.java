@@ -20,7 +20,7 @@ public class Comment {
     private String date;
 
     /**
-     * 
+     *
      * @return
      *     The user
      */
@@ -29,7 +29,7 @@ public class Comment {
     }
 
     /**
-     * 
+     *
      * @param user
      *     The user
      */
@@ -38,7 +38,7 @@ public class Comment {
     }
 
     /**
-     * 
+     *
      * @return
      *     The content
      */
@@ -47,7 +47,7 @@ public class Comment {
     }
 
     /**
-     * 
+     *
      * @param content
      *     The content
      */
@@ -56,7 +56,7 @@ public class Comment {
     }
 
     /**
-     * 
+     *
      * @return
      *     The date
      */
@@ -65,12 +65,11 @@ public class Comment {
     }
 
     /**
-     * 
+     *
      * @param date
      *     The date
      */
     public void setDate(String date) {
         this.date = date;
     }
-
 }

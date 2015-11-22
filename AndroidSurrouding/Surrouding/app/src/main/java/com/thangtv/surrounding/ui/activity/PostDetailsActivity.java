@@ -44,13 +44,14 @@ public class PostDetailsActivity extends AppCompatActivity {
                 .build();
         IGetPostDetails service = retrofit.create(IGetPostDetails.class);
 
-        Call<PostDetailsContainer> call = service.getPostByID(postID, Integer.toString(Var.currentUser.getId()));
+        Call<PostDetailsContainer> call = service.getPostByID(postID, ""+Var.currentUser.getId());
 
-        final PostDetailsContainer postDetailsContainer = new PostDetailsContainer();
+
         call.enqueue(new Callback<PostDetailsContainer>() {
             @Override
             public void onResponse(Response<PostDetailsContainer> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
+                    PostDetailsContainer postDetailsContainer = response.body();
                     PostDetailsAdapter adapter = new PostDetailsAdapter(getApplicationContext(), postDetailsContainer);
                     recyclerView.setAdapter(adapter);
                 } else {
@@ -63,8 +64,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                 Toast.makeText(PostDetailsActivity.this, "Failure", Toast.LENGTH_SHORT).show();
             }
         });
-        PostDetailsAdapter adapter = new PostDetailsAdapter(this, postDetailsContainer);
-        recyclerView.setAdapter(adapter);
+
 
 
     }

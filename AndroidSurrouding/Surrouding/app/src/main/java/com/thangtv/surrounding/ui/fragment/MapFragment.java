@@ -115,7 +115,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                 .build();
         IGetNearByPosts service = retrofit.create(IGetNearByPosts.class);
 
-        Call<PostContainer> call = service.getPostNearby("21.0031", "105.82", "1", "0", "3", Integer.toString(Var.radius));
+        Call<PostContainer> call = service.getPostNearby(Double.toString(myLocationLat), Double.toString(myLocationLng), Integer.toString(Var.currentUser.getId()), "0", "10", Integer.toString(Var.radius));
 
         call.enqueue(new Callback<PostContainer>() {
                          @Override

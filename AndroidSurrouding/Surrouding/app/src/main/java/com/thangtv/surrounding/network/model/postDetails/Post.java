@@ -44,7 +44,7 @@ public class Post {
     private List<Comment> comments = new ArrayList<Comment>();
 
     /**
-     * 
+     *
      * @return
      *     The user
      */
@@ -53,7 +53,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param user
      *     The user
      */
@@ -62,7 +62,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The location
      */
@@ -71,7 +71,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param location
      *     The location
      */
@@ -80,7 +80,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The postId
      */
@@ -89,7 +89,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param postId
      *     The post_id
      */
@@ -98,7 +98,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The content
      */
@@ -107,7 +107,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param content
      *     The content
      */
@@ -116,7 +116,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The date
      */
@@ -125,7 +125,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param date
      *     The date
      */
@@ -134,7 +134,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The postCommentCount
      */
@@ -143,7 +143,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param postCommentCount
      *     The post_comment_count
      */
@@ -152,7 +152,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The postLikeCount
      */
@@ -161,7 +161,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param postLikeCount
      *     The post_like_count
      */
@@ -170,7 +170,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The isLike
      */
@@ -179,7 +179,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param isLike
      *     The is_like
      */
@@ -188,7 +188,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The subjects
      */
@@ -197,7 +197,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param subjects
      *     The subjects
      */
@@ -206,7 +206,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @return
      *     The comments
      */
@@ -215,7 +215,7 @@ public class Post {
     }
 
     /**
-     * 
+     *
      * @param comments
      *     The comments
      */

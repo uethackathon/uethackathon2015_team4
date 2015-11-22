@@ -12,15 +12,15 @@ public class PostDetailsContainer {
     @SerializedName("status")
     @Expose
     private int status;
-    @SerializedName("post")
+    @SerializedName("data")
     @Expose
-    private Post post;
+    private Post data;
     @SerializedName("message")
     @Expose
     private String message;
 
     /**
-     * 
+     *
      * @return
      *     The status
      */
@@ -29,7 +29,7 @@ public class PostDetailsContainer {
     }
 
     /**
-     * 
+     *
      * @param status
      *     The status
      */
@@ -38,25 +38,25 @@ public class PostDetailsContainer {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The post
+     *     The data
      */
     public Post getPost() {
-        return post;
+        return data;
     }
 
     /**
-     * 
-     * @param post
-     *     The post
+     *
+     * @param data
+     *     The data
      */
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPost(Post data) {
+        this.data = data;
     }
 
     /**
-     * 
+     *
      * @return
      *     The message
      */
@@ -65,7 +65,7 @@ public class PostDetailsContainer {
     }
 
     /**
-     * 
+     *
      * @param message
      *     The message
      */

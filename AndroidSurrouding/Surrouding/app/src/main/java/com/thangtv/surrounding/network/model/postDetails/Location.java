@@ -23,7 +23,7 @@ public class Location {
     private String longitude;
 
     /**
-     * 
+     *
      * @return
      *     The locationId
      */
@@ -32,7 +32,7 @@ public class Location {
     }
 
     /**
-     * 
+     *
      * @param locationId
      *     The location_id
      */
@@ -41,7 +41,7 @@ public class Location {
     }
 
     /**
-     * 
+     *
      * @return
      *     The name
      */
@@ -50,7 +50,7 @@ public class Location {
     }
 
     /**
-     * 
+     *
      * @param name
      *     The name
      */
@@ -59,7 +59,7 @@ public class Location {
     }
 
     /**
-     * 
+     *
      * @return
      *     The latitude
      */
@@ -68,7 +68,7 @@ public class Location {
     }
 
     /**
-     * 
+     *
      * @param latitude
      *     The latitude
      */
@@ -77,7 +77,7 @@ public class Location {
     }
 
     /**
-     * 
+     *
      * @return
      *     The longitude
      */
@@ -86,12 +86,11 @@ public class Location {
     }
 
     /**
-     * 
+     *
      * @param longitude
      *     The longitude
      */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
-
 }
