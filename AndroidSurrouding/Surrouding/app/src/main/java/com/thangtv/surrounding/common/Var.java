@@ -26,6 +26,8 @@ import java.util.List;
 
 public class Var {
 
+    public static int radius = 4;
+
     //show Toast
     public static void showToast(Context context, String sms) {
         Toast.makeText(context, sms, Toast.LENGTH_SHORT).show();

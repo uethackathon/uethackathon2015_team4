@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(Var.getObject(this, Const.KEY_USER_ID)!=null) {
+        if(Var.getObject(this, Const.KEY_USER)!=null) {
             //send user to MapViewActivity
-            Var.currentUser = (User) Var.getObject(this, Const.KEY_USER_ID);
+            Var.currentUser = (User) Var.getObject(this, Const.KEY_USER);
             Intent intent = new Intent (MainActivity.this, FeedActivity.class);
             startActivity(intent);
         } else {
