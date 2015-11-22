@@ -36,7 +36,7 @@ public interface ServiceImplements {
 
     @FormUrlEncoded
     @POST("/hackathon/post/comment")
-    Call<PostRegister> postPost(@Field("user_id") String user_id, @Field("post_id") String post_id
+    Call<PostRegister> postComment(@Field("user_id") String user_id, @Field("post_id") String post_id
             ,@Field("content") String content);
 
     @GET("/hackathon/subject/getallsubject")
