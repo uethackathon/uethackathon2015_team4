@@ -1,7 +1,7 @@
 # Project
 * Contest UET Hackathon Open 2015
 
-** Surrounding **
+* Surrounding *
 
 ![Image of Yaktocat](http://i.imgur.com/oM2yRFy.png)
 
