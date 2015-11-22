@@ -1,7 +1,7 @@
 # _Project_
-Surrounding
-_Contest UET Hackathon Open 2015
-_Description: Application for connecting people surrounding
+_Surrounding_
+_Contest UET Hackathon Open 2015_
+_Description: Application for connecting people surrounding_
 
 # Screenshot
 https://goo.gl/q5kxj6
@@ -9,26 +9,24 @@ https://goo.gl/q5kxj6
 ## Using Technical
 
 ### Backend
-Server Centos 7: LAMP
-PHP - Yii framework
-Database: MariaDB
-Rest API
+_Server Centos 7: LAMP_
+_PHP - Yii framework_
+_Database: MariaDB_
+__Rest API_
 ### Client
-Android native
-Retrofit type-safe HTTP client
+_Android native_
+_Retrofit type-safe HTTP client_
 
 ## UI
-Material design
-
+_Material design_
 ## Deploying
-Upload backend to server
-Open project android with IDE Android Studio
+_Upload backend to server_
+_Open project android with IDE Android Studio_
 ### _How to setup the deployment environment_
-
-- _Required Centos 7 in order to setup backend
-- _Required IDE Android Studio or Eclipse
+_- Required Centos 7 in order to setup backend_
+_- Required IDE Android Studio or Eclipse_
 ## Contributor
-Nguyen The Huy - huynt57@gmail.com
-Tran Viet Thang - uendno@gmail.com
-Tran Minh Tuan - tuantmtb@gmail.com
-Ngo Van Tan - nvantan94@gmal.com
+_Nguyen The Huy - huynt57@gmail.com_
+_Tran Viet Thang - uendno@gmail.com_
+_Tran Minh Tuan - tuantmtb@gmail.com_
+_Ngo Van Tan - nvantan94@gmal.com_
