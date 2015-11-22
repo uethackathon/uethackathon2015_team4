@@ -1,6 +1,7 @@
 package com.thangtv.surrounding.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.thangtv.surrounding.network.model.postDetails.PostDetailsContainer;
 import com.thangtv.surrounding.network.model.postNearBy.PostContainer;
 import com.thangtv.surrounding.network.model.register.PostRegister;
 import com.thangtv.surrounding.network.service.ServiceImplements;
+import com.thangtv.surrounding.ui.activity.ProfileActivity;
 import com.thangtv.surrounding.ui.helper.ImageLoadTask;
 
 import java.util.ArrayList;
@@ -192,15 +194,18 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             content = (TextView) parent.findViewById(R.id.content);
             container = (View) parent.findViewById(R.id.container);
 
-            container.setOnClickListener(this);
+            avatar.setOnClickListener(this);
+            name.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.container:
-
-                    break;
+                case R.id.avatar:
+                case R.id.name:
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("userID", Integer.parseInt(comments.get(currentPosition).getUser().getUserId()));
+                    context.startActivity(intent);
             }
         }
     }
