@@ -1,6 +1,7 @@
 package com.thangtv.surrounding.apis;
 
-import com.thangtv.surrounding.network.model.user.PostLogin;
+
+import com.thangtv.surrounding.network.model.login.PostLogin;
 
 import retrofit.Call;
 import retrofit.http.Field;
